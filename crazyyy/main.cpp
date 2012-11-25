@@ -22,7 +22,7 @@ using namespace std;
 double randomInt(int a, int b){
     return (a + (rand() % (b-a+1)));
 }
-
+//lalalalal
 
 int main(int argc, char *argv[]) {
 	srand( (unsigned)time( NULL ) );
