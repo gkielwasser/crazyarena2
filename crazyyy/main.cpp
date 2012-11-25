@@ -9,6 +9,9 @@
 #include <ctime>
 #include <cstdlib>
 
+
+// WHAT THE FUCK !!!!
+
 // Taille de la fen�tre
 #define LARGEUR 1024
 #define HAUTEUR 768
