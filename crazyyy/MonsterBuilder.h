@@ -5,7 +5,7 @@ class MonsterBuilder {
 		public:
 			MonsterBuilder();
 			MonsterBuilder(const MonsterBuilder &);
-			MonsterBuilder();
+
 			~MonsterBuilder();
 
 			void createMonsters() {
@@ -13,4 +13,4 @@ class MonsterBuilder {
 			};
 };
 
-#endif // MAPBUILDER_H_INCLUDED
+#endif // MONSTERBUILDER_H_INCLUDED
