@@ -2,16 +2,15 @@
 #define MAPBUILDER_H_INCLUDED
 
 class MapBuilder {
-		protected:
-			double life;
-			double speed;
-			double damages;
-
 		public:
 			MapBuilder();
 			MapBuilder(const MapBuilder &);
 			MapBuilder();
 			~MapBuilder();
+
+			void createMap() {
+				//Créer tous les cubes + renvoyer la map
+			}
 };
 
 #endif // MAPBUILDER_H_INCLUDED

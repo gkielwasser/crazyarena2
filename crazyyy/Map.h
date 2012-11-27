@@ -2,11 +2,18 @@
 #define MAP_H_INCLUDED
 
 class Map {
-		public:
-			   Map();
-			   Map(const Map &);
-			   Map();
-	           ~Bonus();
+	protected:
+		// liste de cubes
+
+	public:
+		   Map();
+		   Map(const Map &);
+		   Map();
+		   ~Map();
+
+		   void draw() {
+
+		   }
 };
 
 #endif // Map_H_INCLUDED
