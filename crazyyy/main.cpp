@@ -2,12 +2,15 @@
 #include <SDL/SDL_image.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
-#include "Cube.h"
+#include "MapBuilder.h"
+#include "Map.h"
 #include "sdlglutils.h"
 
 #define LARGEUR 600
 #define HAUTEUR 400
 #define FRAMES_PER_SECOND 50
+
+using namespace std;
 
 int main(int argc, char *argv[]) {
     // Initialisation de la SDL
@@ -42,10 +45,8 @@ int main(int argc, char *argv[]) {
     //GLUquadricObj * quad1 = gluNewQuadric();
     //gluQuadricDrawStyle(quad1, GLU_FILL);
 
-    Cube* cube = new Cube(0, 0, 0, 4, 4);
-    Cube* cube1 = new Cube(4, 0, 0, 4, 4);
-    Cube* cube2 = new Cube(8, 0, 0, 4, 4);
-    Cube* cube3 = new Cube(8, 4, 0, 4, 4);
+    MapBuilder* mp = new MapBuilder();
+    Map* map = mp->createMap();
 
     //GLuint floorText = loadTexture("textures/floor.jpg");
     //GLuint wallText = loadTexture("textures/wall.jpg");
@@ -97,10 +98,7 @@ int main(int argc, char *argv[]) {
         // On fait tourner le monde (caméra)
         //glRotated(x, 0, 1, 0);
 
-        cube->draw();
-        cube1->draw();
-        cube2->draw();
-        cube3->draw();
+        map->draw();
 
         // Affichage (en double buffering)
         glFlush();

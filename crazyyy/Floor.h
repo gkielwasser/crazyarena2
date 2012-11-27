@@ -1,23 +1,15 @@
-#ifndef BONUS_H_INCLUDED
-#define BONUS_H_INCLUDED
+#ifndef Floor_H_INCLUDED
+#define Floor_H_INCLUDED
+#include "Cube.h"
 
-class Bonus {
+class Floor : public Cube {
 		public:
-			   Bonus(); // Non impl�ment� donc inutilisable
-			   Bonus(const Bonus &); // Constructeur de copie, non impl�ment� donc interdit
-			   Bonus(int x, int y, int a, int speed, int type);
-	           ~Bonus(); // Destructeur
-	           int x,y,a,speed,type;
-	           void Draw();
-	           void Position();
-	           double getX();
+			   Floor();
+			   Floor(const Floor &);
 
-	           double getY();
+			   Floor(int x, int y, int z, int h, int l) : Cube(x, y, z, h, l) {};
 
-	           double getA();
-	           int getType();
-
-
+	           ~Floor();
 };
 
-#endif // BONUS_H_INCLUDED
+#endif // FLOOR_H_INCLUDED
