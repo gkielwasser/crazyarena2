@@ -7,6 +7,10 @@ class GameDirector {
 			GameDirector(const GameDirector &);
 			GameDirector();
 			~GameDirector();
+
+			void createGame() {
+				// appeller le mapbuilder
+			}
 };
 
 #endif // GAMEDIRECTOR_H_INCLUDED
