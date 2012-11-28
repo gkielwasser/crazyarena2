@@ -6,7 +6,7 @@ class Obstacle : public Cube {
 		public:
 			Obstacle();
 			Obstacle(const Obstacle &);
-			Obstacle(int x, int y, int z, int h, int l) : Cube(x, y, z, h, l) {};
+			Obstacle(int x, int y, int z, int h, int l, Color* c) : Cube(x, y, z, h, l, c) {};
 			~Obstacle();
 };
 

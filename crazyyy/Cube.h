@@ -1,6 +1,7 @@
 #ifndef CUBE_H_INCLUDED
 #define CUBE_H_INCLUDED
 #include "sdlglutils.h"
+#include "Color.h"
 
 class Cube {
     public :
@@ -13,12 +14,16 @@ class Cube {
 	   GLuint text1;
 	   GLuint text2;
 
-	   Cube(double x, double y, double z, double h, double l) {
+	   //Temporaire pour mieux visualiser les cubes(couleur du cube)
+	   Color* color;
+
+	   Cube(double x, double y, double z, double h, double l, Color* color) {
 			this->x = x;
 			this->y = y;
 			this->z = z;
 			this->h = h;
 			this->l = l;
+			this->color = color;
 			//this->text1 = loadTexture("textures/crate1.jpg");
 			//this->text2 = loadTexture("textures/crate2.jpg");
 	   }
@@ -26,7 +31,7 @@ class Cube {
 	   ~Cube();
 
 	   void draw() {
-			glColor3ub(255, 255, 255);
+			glColor3ub(this->color->getRed(), this->color->getGreen(), this->color->getBlue());
 
 			//glBindTexture(GL_TEXTURE_2D, this->text1);
 			glBegin(GL_QUADS);
