@@ -4,6 +4,8 @@
 #include <GL/glu.h>
 #include "MapBuilder.h"
 #include "Map.h"
+#include "CharacterBuilder.h"
+#include "Character.h"
 #include "sdlglutils.h"
 
 #define LARGEUR 600
@@ -37,10 +39,9 @@ int main(int argc, char *argv[]) {
     Uint32 last_time = SDL_GetTicks();
     Uint8 *keystate = SDL_GetKeyState(NULL);
 
-    int x = 5;
-    int y = 5;
-    int z = 0;
-    //int walkSize = 5;
+    int cameraX = 20;
+    int cameraY = 20;
+    int cameraZ = 20;
 
     //GLUquadricObj * quad1 = gluNewQuadric();
     //gluQuadricDrawStyle(quad1, GLU_FILL);
@@ -48,9 +49,14 @@ int main(int argc, char *argv[]) {
     MapBuilder* mp = new MapBuilder();
     Map* map = mp->createMap();
 
+    CharacterBuilder* cb = new CharacterBuilder();
+    Character* character = cb->createCharacter();
+
     //GLuint floorText = loadTexture("textures/floor.jpg");
     //GLuint wallText = loadTexture("textures/wall.jpg");
     //GLuint earthText = loadTexture("textures/earth.jpg");
+
+    bool back = false;
 
     bool continuer = true;
     while (continuer) {
@@ -63,16 +69,29 @@ int main(int argc, char *argv[]) {
         }
 
         if (keystate[SDLK_RIGHT]) {
-			x++;
+        	character->right();
+        	back = false;
+			//x++;
 		}
 		if (keystate[SDLK_LEFT]) {
-			x--;
+			character->left();
+			back = false;
+			//x--;
 		}
 		if (keystate[SDLK_UP]) {
-			y++;
+			character->front();
+			back = false;
+			//y++;
 		}
 		if (keystate[SDLK_DOWN]) {
-			y--;
+			if (back == true) {
+				//character->back();
+				back = false;
+			}
+			else {
+				back = true;
+			}
+			//y--;
 		}
 
         // On met en pause (Frame per second)
@@ -94,11 +113,14 @@ int main(int argc, char *argv[]) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // On place la caméra
-        gluLookAt(x, y, z, 0, 0, 0, 0, 1, 0);
+        gluLookAt(cameraX, cameraY, cameraZ, 0, 0, 0, 0, 1, 0);
         // On fait tourner le monde (caméra)
         //glRotated(x, 0, 1, 0);
 
+
+
         map->draw();
+        character->draw();
 
         // Affichage (en double buffering)
         glFlush();
