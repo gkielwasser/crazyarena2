@@ -10,28 +10,28 @@ class CubeFactory {
 			CubeFactory(const CubeFactory &);
 			~CubeFactory();
 
-			Cube* createCube(int type, int x, int y, int z, int h, int l) {
+			Cube* createCube(int type, int x, int y, int z, int h, int l, Color* color) {
 				Cube* cube;
 
 				if (type == 1) {
-					cube = this->createFloor(x, y, z, h, l);
+					cube = this->createFloor(x, y, z, h, l, color);
 				}
 				else {
-					cube = this->createObstacle(x, y, z, h, l);
+					cube = this->createObstacle(x, y, z, h, l, color);
 				}
 
 				return cube;
 			};
 
 		private:
-			Floor* createFloor(int x, int y, int z, int h, int l) {
-				Floor* floor = new Floor(x, y, z, h, l);
+			Floor* createFloor(int x, int y, int z, int h, int l, Color* color) {
+				Floor* floor = new Floor(x, y, z, h, l, color);
 
 				return floor;
 			};
 
-			Obstacle* createObstacle(int x, int y, int z, int h, int l) {
-				Obstacle* obstacle = new Obstacle(x, y, z, h, l);
+			Obstacle* createObstacle(int x, int y, int z, int h, int l, Color* color) {
+				Obstacle* obstacle = new Obstacle(x, y, z, h, l, color);
 
 				return obstacle;
 			};
