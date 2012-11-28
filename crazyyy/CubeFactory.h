@@ -6,7 +6,7 @@
 
 class CubeFactory {
 		public:
-			CubeFactory();
+			CubeFactory(){};
 			CubeFactory(const CubeFactory &);
 			~CubeFactory();
 

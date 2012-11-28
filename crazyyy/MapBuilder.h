@@ -10,7 +10,7 @@ using namespace std;
 
 class MapBuilder {
 		public:
-			MapBuilder();
+			MapBuilder(){};
 			MapBuilder(const MapBuilder &);
 			~MapBuilder();
 
