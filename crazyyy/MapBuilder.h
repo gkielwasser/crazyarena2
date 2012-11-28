@@ -23,6 +23,7 @@ class MapBuilder {
 
 				//Création d'un vecteur de 16 cubes
 				vector<Cube*> cubes;
+				//Cubes: type, ligne, colonne, hauteur
 				cubes.push_back(cf->createCube(0, 0, 0, 0, 1, 1, blue));
 				cubes.push_back(cf->createCube(0, 0, 0, 1, 1, 1, green));
 				cubes.push_back(cf->createCube(0, 0, 0, 2, 1, 1, blue));
@@ -43,19 +44,48 @@ class MapBuilder {
 				cubes.push_back(cf->createCube(0, 3, 0, 2, 1, 1, blue));
 				cubes.push_back(cf->createCube(0, 3, 0, 3, 1, 1, green));
 
+				vector<Cube*> cubes2;
+				cubes.push_back(cf->createCube(0, 4, 0, 0, 1, 1, blue));
+				cubes.push_back(cf->createCube(0, 4, 0, 1, 1, 1, green));
+				cubes.push_back(cf->createCube(0, 4, 0, 2, 1, 1, blue));
+				cubes.push_back(cf->createCube(0, 4, 0, 3, 1, 1, green));
+
+				cubes.push_back(cf->createCube(0, 5, 0, 0, 1, 1, blue));
+				cubes.push_back(cf->createCube(0, 5, 0, 1, 1, 1, green));
+				cubes.push_back(cf->createCube(0, 5, 0, 2, 1, 1, blue));
+				cubes.push_back(cf->createCube(0, 5, 0, 3, 1, 1, green));
+
+				cubes.push_back(cf->createCube(0, 6, 0, 0, 1, 1, blue));
+				cubes.push_back(cf->createCube(0, 6, 0, 1, 1, 1, green));
+				cubes.push_back(cf->createCube(0, 6, 0, 2, 1, 1, blue));
+				cubes.push_back(cf->createCube(0, 6, 0, 3, 1, 1, green));
+
+				cubes.push_back(cf->createCube(0, 7, 0, 0, 1, 1, blue));
+				cubes.push_back(cf->createCube(0, 7, 0, 1, 1, 1, green));
+				cubes.push_back(cf->createCube(0, 7, 0, 2, 1, 1, blue));
+				cubes.push_back(cf->createCube(0, 7, 0, 3, 1, 1, green));
+
 
 				//Création d'une plate avec son vecteur de cubes
 				Plate* plate = new Plate(cubes);
+				Plate* plate2 = new Plate(cubes2);
 
 				//Création d'un vecteur de plate
 				vector<Plate*> plates;
 				plates.push_back(plate);
+				plates.push_back(plate2);
 
 				//Création d'une map avec son vecteur de plate
 				Map* map = new Map(plates);
 
  				return map;
 			};
+			/*
+			Plate* createPlaque(){
+				//Plate* plate = new Plate(cubes);
+				return plate;
+			}
+			*/
 };
 
 #endif // MAPBUILDER_H_INCLUDED
