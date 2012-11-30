@@ -22,5 +22,9 @@ class Plate {
 				this->cubes[i]->draw();
 			}
 	   };
+
+	   vector<Cube*> getCubes() {
+		   return this->cubes;
+	   }
 };
 #endif // PLATE_H_INCLUDED

@@ -2,6 +2,7 @@
 #define CHARACTER_H_INCLUDED
 #include "sdlglutils.h"
 #include "Color.h"
+#include "Position.h"
 
 using namespace std;
 
@@ -93,16 +94,38 @@ class Character {
 			glEnd();
 	   }
 
+	   Position* frontPosition() {
+		   Position* position = new Position(this->x + speed, this->y - 1, this->z);
+
+		   return position;
+	   };
+
 	   void front() {
 		   this->x += speed;
 	   }
+
+	   Position* leftPosition() {
+		   Position* position = new Position(this->x, this->y - 1, this->z + speed);
+
+		   return position;
+	   };
 
 	   void left() {
 		   this->z += speed;
 	   }
 
+	   Position* rightPosition() {
+		   Position* position = new Position(this->x, this->y - 1, this->z - speed);
+
+		   return position;
+	   };
+
 	   void right() {
 		   this->z -= speed;
+	   }
+
+	   double getX() {
+		   return this->x;
 	   }
 
 	   void setX(double x)
@@ -110,9 +133,17 @@ class Character {
 	       this->x = x;
 	   }
 
+	   double getY() {
+		   return this->y;
+	   }
+
 	   void setY(double y)
 	   {
 	       this->y = y;
+	   }
+
+	   double getZ() {
+		   return this->z;
 	   }
 
 	   void setZ(double z)

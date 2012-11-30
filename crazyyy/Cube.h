@@ -87,5 +87,18 @@ class Cube {
 				  glTexCoord2d(0, 0); glVertex3d(this->x, this->y + this->l, this->z + this->h);
 			glEnd();
 	   }
+
+	   double getX() {
+	       return this->x;
+	   }
+
+	   double getY() {
+	       return this->y;
+	   }
+
+	   double getZ() {
+	       return this->z;
+	   }
 };
+
 #endif // CUBE_H_INCLUDED

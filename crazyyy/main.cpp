@@ -6,11 +6,13 @@
 #include "Map.h"
 #include "CharacterBuilder.h"
 #include "Character.h"
+#include "Position.h"
 #include "sdlglutils.h"
+#include <iostream>
 
 #define LARGEUR 600
 #define HAUTEUR 400
-#define FRAMES_PER_SECOND 50
+#define FRAMES_PER_SECOND 25
 
 using namespace std;
 
@@ -57,6 +59,7 @@ int main(int argc, char *argv[]) {
     //GLuint earthText = loadTexture("textures/earth.jpg");
 
     bool back = false;
+    bool moved = false;
 
     bool continuer = true;
     while (continuer) {
@@ -69,17 +72,35 @@ int main(int argc, char *argv[]) {
         }
 
         if (keystate[SDLK_RIGHT]) {
-        	character->right();
+        	Position* rightPosition = character->rightPosition();
+
+			if (map->getCube(rightPosition->getX(), rightPosition->getY(), rightPosition->getZ()) != 0) {
+				character->right();
+				moved = true;
+			}
+
         	back = false;
 			//x++;
 		}
 		if (keystate[SDLK_LEFT]) {
-			character->left();
+			Position* leftPosition = character->leftPosition();
+
+			if (map->getCube(leftPosition->getX(), leftPosition->getY(), leftPosition->getZ()) != 0) {
+				character->left();
+				moved = true;
+			}
+
 			back = false;
 			//x--;
 		}
 		if (keystate[SDLK_UP]) {
-			character->front();
+			Position* frontPosition = character->frontPosition();
+
+			if (map->getCube(frontPosition->getX(), frontPosition->getY(), frontPosition->getZ()) != 0) {
+				character->front();
+				moved = true;
+			}
+
 			back = false;
 			//y++;
 		}
@@ -92,6 +113,13 @@ int main(int argc, char *argv[]) {
 				back = true;
 			}
 			//y--;
+		}
+
+		if (moved == true) {
+			string pos = character->getX() + ',';
+			//cout <<  << ', ' << character->getY() << ', ' << character->getZ()
+			cout << pos << endl;
+			moved = false;
 		}
 
         // On met en pause (Frame per second)
@@ -117,8 +145,10 @@ int main(int argc, char *argv[]) {
         // On fait tourner le monde (caméra)
         //glRotated(x, 0, 1, 0);
 
+        // On fait avancer le personnage
+        //character->front();
 
-
+        // On dessine tous les éléments
         map->draw();
         character->draw();
 

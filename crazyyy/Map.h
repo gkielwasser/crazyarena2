@@ -25,6 +25,22 @@ class Map {
 					plates[i]->draw();
 				}
 		   }
+
+		   Cube* getCube(int x, int y, int z) {
+			   Cube* cube = 0;
+
+			   for (unsigned int i = 0; i < plates.size(); i++) {
+				   vector<Cube*> cubes = this->plates[i]->getCubes();
+
+				   for (unsigned int j = 0; j < cubes.size(); j++) {
+					   if (cubes[j]->getX() == x && cubes[j]->getY() == y && cubes[j]->getZ() == z) {
+						   cube = cubes[j];
+					   }
+				   }
+			   }
+
+			   return cube;
+		   };
 };
 
 #endif // Map_H_INCLUDED
