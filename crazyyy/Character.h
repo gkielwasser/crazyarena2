@@ -95,7 +95,7 @@ class Character {
 	   }
 
 	   Position* frontPosition() {
-		   Position* position = new Position(this->x + speed, this->y - 1, this->z);
+		   Position* position = new Position(this->x + speed, this->y, this->z - 1);
 
 		   return position;
 	   };
@@ -104,24 +104,34 @@ class Character {
 		   this->x += speed;
 	   }
 
+	   Position* backPosition() {
+		   Position* position = new Position(this->x - speed, this->y, this->z - 1);
+
+		   return position;
+	   };
+
+	   void back() {
+		   this->x -= speed;
+	   }
+
 	   Position* leftPosition() {
-		   Position* position = new Position(this->x, this->y - 1, this->z + speed);
+		   Position* position = new Position(this->x, this->y - speed, this->z - 1);
 
 		   return position;
 	   };
 
 	   void left() {
-		   this->z += speed;
+		   this->y -= speed;
 	   }
 
 	   Position* rightPosition() {
-		   Position* position = new Position(this->x, this->y - 1, this->z - speed);
+		   Position* position = new Position(this->x, this->y + speed, this->z - 1);
 
 		   return position;
 	   };
 
 	   void right() {
-		   this->z -= speed;
+		   this->y += speed;
 	   }
 
 	   double getX() {

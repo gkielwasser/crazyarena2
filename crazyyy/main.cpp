@@ -41,9 +41,9 @@ int main(int argc, char *argv[]) {
     Uint32 last_time = SDL_GetTicks();
     Uint8 *keystate = SDL_GetKeyState(NULL);
 
-    int cameraX = 20;
-    int cameraY = 20;
-    int cameraZ = 20;
+    int cameraX = 10;
+    int cameraY = 10;
+    int cameraZ = 5;
 
     //GLUquadricObj * quad1 = gluNewQuadric();
     //gluQuadricDrawStyle(quad1, GLU_FILL);
@@ -106,7 +106,13 @@ int main(int argc, char *argv[]) {
 		}
 		if (keystate[SDLK_DOWN]) {
 			if (back == true) {
-				//character->back();
+				Position* backPosition = character->backPosition();
+
+				if (map->getCube(backPosition->getX(), backPosition->getY(), backPosition->getZ()) != 0) {
+					character->back();
+					moved = true;
+				}
+
 				back = false;
 			}
 			else {
@@ -116,9 +122,9 @@ int main(int argc, char *argv[]) {
 		}
 
 		if (moved == true) {
-			string pos = character->getX() + ',';
+			//double pos = ;
 			//cout <<  << ', ' << character->getY() << ', ' << character->getZ()
-			cout << pos << endl;
+			cout << character->getX() << ", " << character->getY() << ", " << character->getZ() - 1 << endl;
 			moved = false;
 		}
 
@@ -143,7 +149,8 @@ int main(int argc, char *argv[]) {
         // On place la caméra
         gluLookAt(cameraX, cameraY, cameraZ, 0, 0, 0, 0, 1, 0);
         // On fait tourner le monde (caméra)
-        //glRotated(x, 0, 1, 0);
+        glRotated(70, 0, 1, 0);
+        //glRotated(20, 0, 0, 1);
 
         // On fait avancer le personnage
         //character->front();
