@@ -39,7 +39,7 @@ int main(int argc, char *argv[]) {
      *  	p3: near:
      *  	p4: far: pour qu'un objet puisse s'afficher sur l'écran, il faut qu'il se situe entre les zones near et far, sinon il ne sera pas affiché.
      */
-    gluPerspective (30, (double)LARGEUR/HAUTEUR, 1, 100);
+    gluPerspective (70, (double)LARGEUR/HAUTEUR, 1, 100);
     SDL_Flip(ecran);
 
     SDL_Event event;
@@ -90,10 +90,10 @@ int main(int argc, char *argv[]) {
         if (keystate[SDLK_RIGHT]) {
         	Position* rightPosition = character->rightPosition();
 
-			if (map->getCube(rightPosition->getX(), rightPosition->getY(), rightPosition->getZ()) != 0) {
+			//if (map->getCube(rightPosition->getX(), rightPosition->getY(), rightPosition->getZ()) != 0) {
 				character->right();
 				moved = true;
-			}
+			//}
 
         	back = false;
 			//x++;
@@ -101,10 +101,10 @@ int main(int argc, char *argv[]) {
 		if (keystate[SDLK_LEFT]) {
 			Position* leftPosition = character->leftPosition();
 
-			if (map->getCube(leftPosition->getX(), leftPosition->getY(), leftPosition->getZ()) != 0) {
+			//if (map->getCube(leftPosition->getX(), leftPosition->getY(), leftPosition->getZ()) != 0) {
 				character->left();
 				moved = true;
-			}
+			//}
 
 			back = false;
 			//x--;
@@ -112,10 +112,10 @@ int main(int argc, char *argv[]) {
 		if (keystate[SDLK_UP]) {
 			Position* frontPosition = character->frontPosition();
 
-			if (map->getCube(frontPosition->getX(), frontPosition->getY(), frontPosition->getZ()) != 0) {
+			//if (map->getCube(frontPosition->getX(), frontPosition->getY(), frontPosition->getZ()) != 0) {
 				character->front();
 				moved = true;
-			}
+			//}
 
 			back = false;
 			//y++;

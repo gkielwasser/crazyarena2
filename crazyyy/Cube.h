@@ -30,8 +30,10 @@ class Cube {
 
 	   ~Cube();
 
+	   //Utiliser la fontion glScale() pour agrandir réduire le cube
 	   void draw() {
 		    glPushMatrix();
+
 			glColor3ub(this->color->getRed(), this->color->getGreen(), this->color->getBlue());
 			glTranslated(this->x,this->y,this->z);
 			//glBindTexture(GL_TEXTURE_2D, this->text1);

@@ -37,55 +37,59 @@ class Character {
 	   ~Character();
 
 	   void draw() {
+		   glPushMatrix();
+
 			glColor3ub(this->color->getRed(), this->color->getGreen(), this->color->getBlue());
-
+			glTranslated(this->x,this->y,this->z);
 			//glBindTexture(GL_TEXTURE_2D, this->text1);
 			glBegin(GL_QUADS);
-				  glTexCoord2d(0, 1); glVertex3d(this->x, this->y, this->z);
-				  glTexCoord2d(1, 1); glVertex3d(this->x + this->l, this->y, this->z);
-				  glTexCoord2d(1, 0); glVertex3d(this->x + this->l, this->y + this->l, this->z);
-				  glTexCoord2d(0, 0); glVertex3d(this->x, this->y + this->l, this->z);
+				  glTexCoord2d(0, 1); glVertex3d(0,0,0);
+				  glTexCoord2d(1, 1); glVertex3d(1,0,0);
+				  glTexCoord2d(1, 0); glVertex3d(1,1,0);
+				  glTexCoord2d(0, 0); glVertex3d(0,1,0);
 			glEnd();
 
 			//glBindTexture(GL_TEXTURE_2D, this->text1);
 			glBegin(GL_QUADS);
-				  glTexCoord2d(0, 1); glVertex3d(this->x, this->y, this->z);
-				  glTexCoord2d(1, 1); glVertex3d(this->x + this->l, this->y, this->z);
-				  glTexCoord2d(1, 0); glVertex3d(this->x + this->l, this->y, this->z + this->h);
-				  glTexCoord2d(0, 0); glVertex3d(this->x, this->y, this->z + this->h);
+				  glTexCoord2d(0, 1); glVertex3d(0,0,0);
+				  glTexCoord2d(1, 1); glVertex3d(1,0,0);
+				  glTexCoord2d(1, 0); glVertex3d(1,0,1);
+				  glTexCoord2d(0, 0); glVertex3d(0,0,1);
 			glEnd();
 
 			//glBindTexture(GL_TEXTURE_2D, this->text1);
 			glBegin(GL_QUADS);
-				  glTexCoord2d(0, 1); glVertex3d(this->x + this->l, this->y, this->z);
-				  glTexCoord2d(1, 1); glVertex3d(this->x + this->l, this->y + this->l, this->z);
-				  glTexCoord2d(1, 0); glVertex3d(this->x + this->l, this->y + this->l, this->z + this->h);
-				  glTexCoord2d(0, 0); glVertex3d(this->x + this->l, this->y, this->z + this->h);
+				  glTexCoord2d(0, 1); glVertex3d(1,0,0);
+				  glTexCoord2d(1, 1); glVertex3d(1,1,0);
+				  glTexCoord2d(1, 0); glVertex3d(1, 0, 1);
+				  glTexCoord2d(0, 0); glVertex3d(1,0,1);
 			glEnd();
 
 			//glBindTexture(GL_TEXTURE_2D, this->text1);
 			glBegin(GL_QUADS);
-				  glTexCoord2d(0, 1); glVertex3d(this->x + this->l, this->y + this->l, this->z);
-				  glTexCoord2d(1, 1); glVertex3d(this->x, this->y + this->l, this->z);
-				  glTexCoord2d(1, 0); glVertex3d(this->x, this->y + this->l, this->z + this->h);
-				  glTexCoord2d(0, 0); glVertex3d(this->x + this->l, this->y + this->l, this->z + this->h);
+				  glTexCoord2d(0, 1); glVertex3d(1,1,0);
+				  glTexCoord2d(1, 1); glVertex3d(0,1,0);
+				  glTexCoord2d(1, 0); glVertex3d(0,1,1);
+				  glTexCoord2d(0, 0); glVertex3d(1,1,1);
 			glEnd();
 
 			//glBindTexture(GL_TEXTURE_2D, this->text1);
 			glBegin(GL_QUADS);
-				  glTexCoord2d(0, 1); glVertex3d(this->x, this->y,            this->z);
-				  glTexCoord2d(1, 1); glVertex3d(this->x, this->y + this->l,  this->z);
-				  glTexCoord2d(1, 0); glVertex3d(this->x, this->y + this->l,  this->z + this->h);
-				  glTexCoord2d(0, 0); glVertex3d(this->x, this->y,            this->z + this->h);
+				  glTexCoord2d(0, 1); glVertex3d(0,0,0);
+				  glTexCoord2d(1, 1); glVertex3d(0,1,0);
+				  glTexCoord2d(1, 0); glVertex3d(0,1,1);
+				  glTexCoord2d(0, 0); glVertex3d(0,0,1);
 			glEnd();
 
 			//glBindTexture(GL_TEXTURE_2D, this->text1);
 			glBegin(GL_QUADS);
-				  glTexCoord2d(0, 1); glVertex3d(this->x, this->y, this->z + this->h);
-				  glTexCoord2d(1, 1); glVertex3d(this->x + this->l, this->y, this->z + this->h);
-				  glTexCoord2d(1, 0); glVertex3d(this->x + this->l, this->y + this->l, this->z + this->h);
-				  glTexCoord2d(0, 0); glVertex3d(this->x, this->y + this->l, this->z + this->h);
+				  glTexCoord2d(0, 1); glVertex3d(0,0,1);
+				  glTexCoord2d(1, 1); glVertex3d(1,0,1);
+				  glTexCoord2d(1, 0); glVertex3d(1,1,1);
+				  glTexCoord2d(0, 0); glVertex3d(0,1,1);
 			glEnd();
+
+			glPopMatrix();
 	   }
 
 	   Position* frontPosition() {
