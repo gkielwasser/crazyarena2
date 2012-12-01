@@ -10,14 +10,21 @@ class Position {
 		public:
 			Position();
 			Position(const Position &);
-			Position();
+
+			Position(double x, double y, double z) {
+				this->x = x;
+				this->y = y;
+				this->z = z;
+			};
+
 			~Position();
-    double getX() const;
-    double getY() const;
-    double getZ() const;
-    void setX(double x);
-    void setY(double y);
-    void setZ(double z);
+
+			double getX() const;
+			double getY() const;
+			double getZ() const;
+			void setX(double x);
+			void setY(double y);
+			void setZ(double z);
 };
 
 double Position::getX() const

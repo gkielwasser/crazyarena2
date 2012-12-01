@@ -6,21 +6,15 @@
 #include "Map.h"
 #include "CharacterBuilder.h"
 #include "Character.h"
+#include "Position.h"
 #include "sdlglutils.h"
 #include <iostream>
-#include "math.h"
 
 #define LARGEUR 600
 #define HAUTEUR 400
-#define FRAMES_PER_SECOND 50
+#define FRAMES_PER_SECOND 25
 
 using namespace std;
-
-void printCoord(int x, int y, int z){
-	cout << "x:"<< x <<" y:" << y <<" z:"<< z<< endl;
-}
-
-
 
 int main(int argc, char *argv[]) {
     // Initialisation de la SDL
@@ -43,22 +37,13 @@ int main(int argc, char *argv[]) {
     SDL_Event event;
     SDL_EnableKeyRepeat(10,10); // Activation de la répétition de touches
 
-
-
     Uint32 current_time; // Heure actuelle (frames second)
     Uint32 last_time = SDL_GetTicks();
     Uint8 *keystate = SDL_GetKeyState(NULL);
 
-    /*
     int cameraX = 20;
     int cameraY = 20;
     int cameraZ = 20;
-	*/
-
-    float cameraX = 13, cameraY = 2, cameraZ = 0, xrot = 0, yrot = 0, angle = 0.0;
-    float lastx, lasty;
-
-
 
     //GLUquadricObj * quad1 = gluNewQuadric();
     //gluQuadricDrawStyle(quad1, GLU_FILL);
@@ -74,6 +59,7 @@ int main(int argc, char *argv[]) {
     //GLuint earthText = loadTexture("textures/earth.jpg");
 
     bool back = false;
+    bool moved = false;
 
     bool continuer = true;
     while (continuer) {
@@ -86,17 +72,35 @@ int main(int argc, char *argv[]) {
         }
 
         if (keystate[SDLK_RIGHT]) {
-        	character->right();
+        	Position* rightPosition = character->rightPosition();
+
+			if (map->getCube(rightPosition->getX(), rightPosition->getY(), rightPosition->getZ()) != 0) {
+				character->right();
+				moved = true;
+			}
+
         	back = false;
 			//x++;
 		}
 		if (keystate[SDLK_LEFT]) {
-			character->left();
+			Position* leftPosition = character->leftPosition();
+
+			if (map->getCube(leftPosition->getX(), leftPosition->getY(), leftPosition->getZ()) != 0) {
+				character->left();
+				moved = true;
+			}
+
 			back = false;
 			//x--;
 		}
 		if (keystate[SDLK_UP]) {
-			character->front();
+			Position* frontPosition = character->frontPosition();
+
+			if (map->getCube(frontPosition->getX(), frontPosition->getY(), frontPosition->getZ()) != 0) {
+				character->front();
+				moved = true;
+			}
+
 			back = false;
 			//y++;
 		}
@@ -110,71 +114,11 @@ int main(int argc, char *argv[]) {
 			}
 			//y--;
 		}
-		if(keystate[SDLK_a]){
-			cameraY--;
 
+		if (moved == true) {
+			cout << "x: "<< character->getX() << " y:" << character->getY() << " z:" << character->getZ()<< endl;
+			moved = false;
 		}
-		if(keystate[SDLK_z]){
-			cameraY++;
-		}
-		if(keystate[SDLK_q]){
-			cameraZ--;
-
-		}
-		if(keystate[SDLK_s]){
-			cameraZ++;
-		}
-		if(keystate[SDLK_w]){
-			cameraX--;
-
-		}
-		if(keystate[SDLK_x]){
-			cameraX++;
-		}
-
-		if (keystate[SDLK_r])
-		{
-			float yrotrad;
-			yrotrad = (yrot / 180 * 3.141592654f);
-			cameraX += float(cos(yrotrad)) * 0.2;
-			cameraZ += float(sin(yrotrad)) * 0.2;
-		}
-
-		if (keystate[SDLK_e])
-		{
-			float yrotrad;
-			yrotrad = (yrot / 180 * 3.141592654f);
-			cameraX -= float(cos(yrotrad)) * 0.2;
-			cameraZ -= float(sin(yrotrad)) * 0.2;
-		}
-
-		 if (keystate[SDLK_l])
-		    {
-			 xrot += 1;
-			 if (xrot >360) xrot -= 360;
-		    }
-
-		    if (keystate[SDLK_m])
-		    {
-		    	xrot -= 1;
-		    	if (xrot < -360) xrot += 360;
-		    }
-
-		    if (keystate[SDLK_o])
-		    {
-		    float yrotrad;
-		    yrotrad = (yrot / 180 * 3.141592654f);
-		    cameraX += float(cos(yrotrad)) * 0.2;
-		    cameraZ += float(sin(yrotrad)) * 0.2;
-		    }
-
-		    if (keystate[SDLK_p])
-		    {
-		    float yrotrad;
-		    yrotrad = (yrot / 180 * 3.141592654f);
-		    cameraX -= float(cos(yrotrad)) * 0.2;
-		    cameraZ -= float(sin(yrotrad)) * 0.2;
-		    }
 
         // On met en pause (Frame per second)
         current_time = SDL_GetTicks();
@@ -184,7 +128,6 @@ int main(int argc, char *argv[]) {
 		}
 		last_time = SDL_GetTicks();
 
-		//glScalef(ta,tz,1); //Changement de l'orientation des axes x y z
 
         glClearColor(0.6, 0.6, 0.6, 1); // Arrière plan
 
@@ -198,10 +141,12 @@ int main(int argc, char *argv[]) {
         // On place la caméra
         gluLookAt(cameraX, cameraY, cameraZ, 0, 0, 0, 0, 1, 0);
         // On fait tourner le monde (caméra)
-        glRotated(0, 1, 1, 0);
+        //glRotated(x, 0, 1, 0);
 
-        printCoord(cameraX, cameraY, cameraZ);
+        // On fait avancer le personnage
+        //character->front();
 
+        // On dessine tous les éléments
         map->draw();
         character->draw();
 
