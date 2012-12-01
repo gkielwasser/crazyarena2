@@ -25,13 +25,21 @@ int main(int argc, char *argv[]) {
     SDL_Surface* ecran = SDL_SetVideoMode(LARGEUR, HAUTEUR, 32, SDL_OPENGL);
 
     // Initialisation de l'affichage OpenGL
+    /* Control the Projection */
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glEnable(GL_DEPTH_TEST); // On prends en compte les zones cachées
     glEnable(GL_TEXTURE_2D); // On active les textures
     //glEnable(GL_FOG);
 
-    gluPerspective (70, (double)LARGEUR/HAUTEUR, 1, 100);
+    /*
+     *  Explications gluPerspective(détails:http://www.siteduzero.com/tutoriel-3-421544-la-matrice-de-projection.html)
+     *  	p1: angle (exemple: 70,30,100: angle de vue de la scène-> plus celui-ci est petit, plus on a l'impression de faire un zoom sur la scène
+     *  	p2: ratio: largeur/hauteur
+     *  	p3: near:
+     *  	p4: far: pour qu'un objet puisse s'afficher sur l'écran, il faut qu'il se situe entre les zones near et far, sinon il ne sera pas affiché.
+     */
+    gluPerspective (30, (double)LARGEUR/HAUTEUR, 1, 100);
     SDL_Flip(ecran);
 
     SDL_Event event;
@@ -44,6 +52,8 @@ int main(int argc, char *argv[]) {
     int cameraX = 20;
     int cameraY = 20;
     int cameraZ = 20;
+
+    int x=132; //orientation du jeu dans la bonne position pour jouer. La touche A et Z permettent de faire pivoter la carte.
 
     //GLUquadricObj * quad1 = gluNewQuadric();
     //gluQuadricDrawStyle(quad1, GLU_FILL);
@@ -114,6 +124,14 @@ int main(int argc, char *argv[]) {
 			}
 			//y--;
 		}
+		if (keystate[SDLK_a]) {
+			x++;
+			cout << "x:"<< x<<endl;
+		}
+		if (keystate[SDLK_z]) {
+			x--;
+			cout << "x:"<< x<<endl;
+		}
 
 		if (moved == true) {
 			cout << "x: "<< character->getX() << " y:" << character->getY() << " z:" << character->getZ()<< endl;
@@ -131,17 +149,21 @@ int main(int argc, char *argv[]) {
 
         glClearColor(0.6, 0.6, 0.6, 1); // Arrière plan
 
-        // Initialisation de la matrice de modélisation
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
+        /* Control the Model / View */
+        glMatrixMode(GL_MODELVIEW); // Choix de la matrice
+        glLoadIdentity(); //Initialisation/RAZ de la matrice model/view pour ne pas garder les anciennes valeurs
 
         // On efface la fenêtre (pour la redessiner)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // On place la caméra
+        // On place la caméra(cela permet d'avancer automatiquement la caméra en incrémentant les variable cameraX,Y,Z).
+        //cameraZ--;
         gluLookAt(cameraX, cameraY, cameraZ, 0, 0, 0, 0, 1, 0);
-        // On fait tourner le monde (caméra)
-        //glRotated(x, 0, 1, 0);
+
+        // On fait tourner le monde (caméra). Exemple en incrémentant la variable x ci-dessous
+        //x++;
+        //cout<<x<<endl;
+        glRotated(x, 0, 1, 0);
 
         // On fait avancer le personnage
         //character->front();
