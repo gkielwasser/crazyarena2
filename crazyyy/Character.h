@@ -41,7 +41,6 @@ class Character {
 
 			//glBindTexture(GL_TEXTURE_2D, this->text1);
 			glBegin(GL_QUADS);
-				  glRotated(0, 0, 0, 0); // On fait une roation de 270° selon l'axe x (valeur, boolean x, boolean y, boolean z)
 				  glTexCoord2d(0, 1); glVertex3d(this->x, this->y, this->z);
 				  glTexCoord2d(1, 1); glVertex3d(this->x + this->l, this->y, this->z);
 				  glTexCoord2d(1, 0); glVertex3d(this->x + this->l, this->y + this->l, this->z);
@@ -50,7 +49,6 @@ class Character {
 
 			//glBindTexture(GL_TEXTURE_2D, this->text1);
 			glBegin(GL_QUADS);
-				  glRotated(0, 0, 0, 0); // On fait une roation de 270° selon l'axe x (valeur, boolean x, boolean y, boolean z)
 				  glTexCoord2d(0, 1); glVertex3d(this->x, this->y, this->z);
 				  glTexCoord2d(1, 1); glVertex3d(this->x + this->l, this->y, this->z);
 				  glTexCoord2d(1, 0); glVertex3d(this->x + this->l, this->y, this->z + this->h);
@@ -59,7 +57,6 @@ class Character {
 
 			//glBindTexture(GL_TEXTURE_2D, this->text1);
 			glBegin(GL_QUADS);
-				  glRotated(0, 0, 0, 0); // On fait une roation de 270° selon l'axe x (valeur, boolean x, boolean y, boolean z)
 				  glTexCoord2d(0, 1); glVertex3d(this->x + this->l, this->y, this->z);
 				  glTexCoord2d(1, 1); glVertex3d(this->x + this->l, this->y + this->l, this->z);
 				  glTexCoord2d(1, 0); glVertex3d(this->x + this->l, this->y + this->l, this->z + this->h);
@@ -68,7 +65,6 @@ class Character {
 
 			//glBindTexture(GL_TEXTURE_2D, this->text1);
 			glBegin(GL_QUADS);
-				  glRotated(0, 0, 0, 0); // On fait une roation de 270° selon l'axe x (valeur, boolean x, boolean y, boolean z)
 				  glTexCoord2d(0, 1); glVertex3d(this->x + this->l, this->y + this->l, this->z);
 				  glTexCoord2d(1, 1); glVertex3d(this->x, this->y + this->l, this->z);
 				  glTexCoord2d(1, 0); glVertex3d(this->x, this->y + this->l, this->z + this->h);
@@ -77,7 +73,6 @@ class Character {
 
 			//glBindTexture(GL_TEXTURE_2D, this->text1);
 			glBegin(GL_QUADS);
-				  glRotated(0, 0, 0, 0); // On fait une roation de 270° selon l'axe x (valeur, boolean x, boolean y, boolean z)
 				  glTexCoord2d(0, 1); glVertex3d(this->x, this->y,            this->z);
 				  glTexCoord2d(1, 1); glVertex3d(this->x, this->y + this->l,  this->z);
 				  glTexCoord2d(1, 0); glVertex3d(this->x, this->y + this->l,  this->z + this->h);
@@ -86,7 +81,6 @@ class Character {
 
 			//glBindTexture(GL_TEXTURE_2D, this->text1);
 			glBegin(GL_QUADS);
-				  glRotated(0, 0, 0, 0); // On fait une roation de 270° selon l'axe x (valeur, boolean x, boolean y, boolean z)
 				  glTexCoord2d(0, 1); glVertex3d(this->x, this->y, this->z + this->h);
 				  glTexCoord2d(1, 1); glVertex3d(this->x + this->l, this->y, this->z + this->h);
 				  glTexCoord2d(1, 0); glVertex3d(this->x + this->l, this->y + this->l, this->z + this->h);

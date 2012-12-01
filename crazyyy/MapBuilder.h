@@ -21,7 +21,7 @@ class MapBuilder {
 				Color* blue = new Color(51, 102, 255);
 				Color* blue2 = new Color(51, 204, 255);
 
-				//Colonne 1
+				//Colonne 1a
 				//Coins haut gauche(0,0)
 				vector<Cube*> cubes;
 				cubes.push_back(cf->createCube(0, 0, 0, 0, 1, 1, blue));
