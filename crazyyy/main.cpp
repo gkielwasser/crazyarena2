@@ -53,7 +53,13 @@ int main(int argc, char *argv[]) {
     int cameraY = 20;
     int cameraZ = 20;
 
-    int x=132; //orientation du jeu dans la bonne position pour jouer. La touche A et Z permettent de faire pivoter la carte.
+    /* Passer en mode Création de la carte: x=38;
+     * Passer en mode Jeu: x=132
+     *
+     * La touche A permet de changer le mode
+     */
+    int x=38;
+    //int x=132;
 
     //GLUquadricObj * quad1 = gluNewQuadric();
     //gluQuadricDrawStyle(quad1, GLU_FILL);
@@ -125,12 +131,16 @@ int main(int argc, char *argv[]) {
 			//y--;
 		}
 		if (keystate[SDLK_a]) {
-			x++;
-			cout << "x:"<< x<<endl;
+			if(x==132) x = 38;
+			else x = 132;
 		}
-		if (keystate[SDLK_z]) {
-			x--;
-			cout << "x:"<< x<<endl;
+		if (keystate[SDLK_q]) {
+			cameraY++;
+			cout << "cameraZ:"<< cameraZ<<endl;
+		}
+		if (keystate[SDLK_s]) {
+			cameraY--;
+			cout << "cameraZ:"<< cameraZ<<endl;
 		}
 
 		if (moved == true) {
@@ -160,9 +170,7 @@ int main(int argc, char *argv[]) {
         //cameraZ--;
         gluLookAt(cameraX, cameraY, cameraZ, 0, 0, 0, 0, 1, 0);
 
-        // On fait tourner le monde (caméra). Exemple en incrémentant la variable x ci-dessous
-        //x++;
-        //cout<<x<<endl;
+        // On fait tourner le monde (caméra).
         glRotated(x, 0, 1, 0);
 
         // On fait avancer le personnage
