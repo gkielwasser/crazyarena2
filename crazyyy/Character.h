@@ -41,6 +41,7 @@ class Character {
 
 			glColor3ub(this->color->getRed(), this->color->getGreen(), this->color->getBlue());
 			glTranslated(this->x,this->y,this->z);
+
 			//glBindTexture(GL_TEXTURE_2D, this->text1);
 			glBegin(GL_QUADS);
 				  glTexCoord2d(0, 1); glVertex3d(0,0,0);

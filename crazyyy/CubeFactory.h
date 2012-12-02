@@ -5,36 +5,44 @@
 #include "Obstacle.h"
 
 class CubeFactory {
-		public:
-			CubeFactory(){};
-			CubeFactory(const CubeFactory &);
-			~CubeFactory();
+public:
+	CubeFactory() {
+	}
+	;
+	CubeFactory(const CubeFactory &);
+	~CubeFactory();
 
-			Cube* createCube(int type, int x, int y, int z, int h, int l, Color* color) {
-				Cube* cube;
+	Cube* createCube(double type, double x, double y, double z, double h, double l, double xmap,
+			double ymap, double zmap, Color* color) {
+		Cube* cube;
 
-				if (type == 1) {
-					cube = this->createFloor(x, y, z, h, l, color);
-				}
-				else {
-					cube = this->createObstacle(x, y, z, h, l, color);
-				}
+		if (type == 1) {
+			cube = this->createFloor(x, y, z, h, l, xmap, ymap, zmap, color);
+		} else {
+			cube = this->createObstacle(x, y, z, h, l, xmap, ymap, zmap, color);
+		}
 
-				return cube;
-			};
+		return cube;
+	}
+	;
 
-		private:
-			Floor* createFloor(int x, int y, int z, int h, int l, Color* color) {
-				Floor* floor = new Floor(x, y, z, h, l, color);
+private:
+	Floor* createFloor(double x, double y, double z,  double h, double l, double xmap,
+			double ymap, double zmap,Color* color) {
+		Floor* floor = new Floor(x, y, z, h, l, xmap, ymap, zmap, color);
 
-				return floor;
-			};
+		return floor;
+	}
+	;
 
-			Obstacle* createObstacle(int x, int y, int z, int h, int l, Color* color) {
-				Obstacle* obstacle = new Obstacle(x, y, z, h, l, color);
+	Obstacle* createObstacle(double x, double y, double z, double h, double l, double xmap,
+			double ymap, double zmap,Color* color) {
+		Obstacle* obstacle = new Obstacle(x, y, z, h, l, xmap, ymap, zmap,
+				color);
 
-				return obstacle;
-			};
+		return obstacle;
+	}
+	;
 };
 
 #endif // CUBEFACTORY_H_INCLUDED
