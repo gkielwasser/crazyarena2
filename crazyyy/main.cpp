@@ -133,6 +133,7 @@ int main(int argc, char *argv[]) {
 
 				character->back();
 				back = false;
+				//TOTO
 			} else {
 				back = true;
 			}
@@ -196,6 +197,13 @@ int main(int argc, char *argv[]) {
 
 		// On place la caméra(cela permet d'avancer automatiquement la caméra en incrémentant les variable cameraX,Y,Z).
 		//cameraZ--;
+
+		/*
+		 * Calcul des nouvelles coordonnées
+		 */
+
+
+
 		gluLookAt(character->getX() + cameraX, character->getY() + cameraY,
 				character->getZ() + cameraZ, character->getX(), character->getY()+2,
 				character->getZ(), upX, upY, upZ);
