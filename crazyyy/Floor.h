@@ -7,7 +7,7 @@ class Floor : public Cube {
 			   Floor();
 			   Floor(const Floor &);
 
-			   Floor(int x, int y, int z, int h, int l, Color* c) : Cube(x, y, z, h, l, c) {};
+			   Floor(int x, int y, int z, int h, int l, double xmap, double ymap, double zmap,Color* c) : Cube(x, y, z, xmap, ymap, zmap, h, l, c) {};
 
 	           ~Floor();
 };

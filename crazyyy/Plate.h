@@ -6,25 +6,56 @@
 using namespace std;
 
 class Plate {
-	protected:
-		vector<Cube*> cubes;
+protected:
+	vector<Cube*> cubes;
+	double x;
+	double y;
+	double z;
 
-    public :
-	   Plate(vector<Cube*> cubes) {
-		   this->cubes = cubes;
-	   };
+public:
+	Plate(vector<Cube*> cubes) {
+		this->cubes = cubes;
+	}
+	;
 
-	   ~Plate();
+	//Constructeur d'une Plate
+	Plate(double x, double y, double z, vector<Cube*> cubes) {
+		this->x = x;
+		this->y = y;
+		this->z = z;
+		this->cubes = cubes;
 
-	   void draw() {
-		   // Pour chaque cube
-			for (unsigned int i = 0; i < this->cubes.size(); i++) {
-				this->cubes[i]->draw();
-			}
-	   };
+		this->draw();
+	}
+	;
 
-	   vector<Cube*> getCubes() {
-		   return this->cubes;
-	   }
+	~Plate();
+
+	void draw() {
+		glPushMatrix();
+		glTranslated(this->x, this->y, this->z);
+		// Pour chaque cube
+		for (unsigned int i = 0; i < this->cubes.size(); i++) {
+			this->cubes[i]->draw();
+		}
+		glPopMatrix();
+	}
+	;
+
+	vector<Cube*> getCubes() {
+		return this->cubes;
+	}
+	double getX() {
+		return x;
+	}
+
+	double getY() {
+		return y;
+	}
+
+	double getZ() {
+		return z;
+	}
 };
+
 #endif // PLATE_H_INCLUDED

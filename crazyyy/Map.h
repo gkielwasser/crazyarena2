@@ -33,7 +33,7 @@ class Map {
 				   vector<Cube*> cubes = this->plates[i]->getCubes();
 
 				   for (unsigned int j = 0; j < cubes.size(); j++) {
-					   if (cubes[j]->getX() == x && cubes[j]->getY() == y && cubes[j]->getZ() == z) {
+					   if (cubes[j]->getXMap() == x && cubes[j]->getYMap() == y && cubes[j]->getZMap() == z) {
 						   cube = cubes[j];
 					   }
 				   }

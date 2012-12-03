@@ -16,6 +16,14 @@
 
 using namespace std;
 
+//angle of rotation
+float xpos = 0, ypos = 0, zpos = 0, xrot = 0, yrot = 0, angle=0.0;
+float upX=0,upY = 1,upZ = 0;
+float cameraOffset = 10; // our distance from our character
+
+float lastx, lasty;
+
+
 int main(int argc, char *argv[]) {
     // Initialisation de la SDL
     SDL_Init(SDL_INIT_VIDEO);
@@ -25,12 +33,21 @@ int main(int argc, char *argv[]) {
     SDL_Surface* ecran = SDL_SetVideoMode(LARGEUR, HAUTEUR, 32, SDL_OPENGL);
 
     // Initialisation de l'affichage OpenGL
+    /* Control the Projection */
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     glEnable(GL_DEPTH_TEST); // On prends en compte les zones cachées
     glEnable(GL_TEXTURE_2D); // On active les textures
     //glEnable(GL_FOG);
 
+    /*
+     *  Explications gluPerspective(détails:http://www.siteduzero.com/tutoriel-3-421544-la-matrice-de-projection.html)
+     *  	p1: angle (exemple: 70,30,100: angle de vue de la scène-> plus celui-ci est petit, plus on a l'impression de faire un zoom sur la scène
+     *  	p2: ratio: largeur/hauteur
+     *  	p3: near:
+     *  	p4: far: pour qu'un objet puisse s'afficher sur l'écran, il faut qu'il se situe entre les zones near et far, sinon il ne sera pas affiché.
+     */
+    //gluPerspective (20, (double)LARGEUR/HAUTEUR, 1, 100);
     gluPerspective (70, (double)LARGEUR/HAUTEUR, 1, 100);
     SDL_Flip(ecran);
 
@@ -41,9 +58,22 @@ int main(int argc, char *argv[]) {
     Uint32 last_time = SDL_GetTicks();
     Uint8 *keystate = SDL_GetKeyState(NULL);
 
-    int cameraX = 10;
-    int cameraY = 10;
-    int cameraZ = 5;
+    /*
+    int cameraX = 0;
+    int cameraY = 5;
+    int cameraZ = 10;
+	*/
+    int cameraX = 20;
+        int cameraY = 20;
+        int cameraZ = 20;
+    /* Passer en mode Création de la carte: x=38;
+     * Passer en mode Jeu: x=132
+     *
+     * La touche A permet de changer le mode
+     */
+    int x=90;
+    //int x=38;
+    //int x=132;
 
     //GLUquadricObj * quad1 = gluNewQuadric();
     //gluQuadricDrawStyle(quad1, GLU_FILL);
@@ -102,17 +132,11 @@ int main(int argc, char *argv[]) {
 			}
 
 			back = false;
-			//y++;
+			//cameraZ--;
 		}
 		if (keystate[SDLK_DOWN]) {
 			if (back == true) {
-				Position* backPosition = character->backPosition();
-
-				if (map->getCube(backPosition->getX(), backPosition->getY(), backPosition->getZ()) != 0) {
-					character->back();
-					moved = true;
-				}
-
+				//character->back();
 				back = false;
 			}
 			else {
@@ -120,11 +144,21 @@ int main(int argc, char *argv[]) {
 			}
 			//y--;
 		}
+		if (keystate[SDLK_a]) {
+			if(x==132) x = 38;
+			else x = 132;
+		}
+		if (keystate[SDLK_q]) {
+			x++;
+			cout << "x:"<< x<<endl;
+		}
+		if (keystate[SDLK_s]) {
+			x--;
+			cout << "x:"<< x<<endl;
+		}
 
 		if (moved == true) {
-			//double pos = ;
-			//cout <<  << ', ' << character->getY() << ', ' << character->getZ()
-			cout << character->getX() << ", " << character->getY() << ", " << character->getZ() - 1 << endl;
+			cout << "x: "<< character->getX() << " y:" << character->getY() << " z:" << character->getZ()<< endl;
 			moved = false;
 		}
 
@@ -139,18 +173,22 @@ int main(int argc, char *argv[]) {
 
         glClearColor(0.6, 0.6, 0.6, 1); // Arrière plan
 
-        // Initialisation de la matrice de modélisation
-        glMatrixMode(GL_MODELVIEW);
-        glLoadIdentity();
+        /* Control the Model / View */
+        glMatrixMode(GL_MODELVIEW); // Choix de la matrice
+        glLoadIdentity(); //Initialisation/RAZ de la matrice model/view pour ne pas garder les anciennes valeurs
 
         // On efface la fenêtre (pour la redessiner)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // On place la caméra
-        gluLookAt(cameraX, cameraY, cameraZ, 0, 0, 0, 0, 1, 0);
-        // On fait tourner le monde (caméra)
-        glRotated(70, 0, 1, 0);
-        //glRotated(20, 0, 0, 1);
+        // On place la caméra(cela permet d'avancer automatiquement la caméra en incrémentant les variable cameraX,Y,Z).
+        //cameraZ--;
+        //gluLookAt(cameraX, cameraY, cameraZ, character->getX(), character->getY(), character->getZ(), upX, upY, upZ);
+        gluLookAt(cameraX, cameraY, cameraZ, 0, 0, 0, upX, upY, upZ);
+
+        // On fait tourner le monde (caméra).
+        //glTranslated(character->getX(),0,0);
+        //glTranslatef(0.0f, 0.0f, -cRadius);
+        glRotated(x, 0, 1, 0);
 
         // On fait avancer le personnage
         //character->front();
