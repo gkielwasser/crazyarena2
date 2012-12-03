@@ -14,8 +14,7 @@ public:
 	double ymap;
 	double zmap;
 
-	GLuint text1;
-	GLuint text2;
+	GLuint topTexture;
 
 	//Temporaire pour mieux visualiser les cubes(couleur du cube)
 	Color* color;
@@ -31,8 +30,8 @@ public:
 		this->ymap = ymap;
 		this->zmap = zmap;
 		this->color = color;
-		//this->text1 = loadTexture("textures/crate1.jpg");
-		//this->text2 = loadTexture("textures/crate2.jpg");
+
+		this->topTexture = loadTexture("textures/ice01.jpg");
 	}
 
 	~Cube();
@@ -40,11 +39,11 @@ public:
 	//Utiliser la fontion glScale() pour agrandir réduire le cube
 	void draw() {
 		glPushMatrix();
-
-		glColor3ub(this->color->getRed(), this->color->getGreen(),
-				this->color->getBlue());
 		glTranslated(this->x, this->y, this->z);
-		//glBindTexture(GL_TEXTURE_2D, this->text1);
+
+		glColor3ub(this->color->getRed(), this->color->getGreen(), this->color->getBlue());
+
+		glBindTexture(GL_TEXTURE_2D, this->topTexture);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(0, 0, 0);
@@ -56,7 +55,6 @@ public:
 		glVertex3d(0, 1, 0);
 		glEnd();
 
-		//glBindTexture(GL_TEXTURE_2D, this->text1);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(0, 0, 0);
@@ -68,7 +66,6 @@ public:
 		glVertex3d(0, 0, 1);
 		glEnd();
 
-		//glBindTexture(GL_TEXTURE_2D, this->text1);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(1, 0, 0);
@@ -80,7 +77,6 @@ public:
 		glVertex3d(1, 0, 1);
 		glEnd();
 
-		//glBindTexture(GL_TEXTURE_2D, this->text1);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(1, 1, 0);
@@ -92,7 +88,6 @@ public:
 		glVertex3d(1, 1, 1);
 		glEnd();
 
-		//glBindTexture(GL_TEXTURE_2D, this->text1);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(0, 0, 0);
@@ -104,7 +99,6 @@ public:
 		glVertex3d(0, 0, 1);
 		glEnd();
 
-		//glBindTexture(GL_TEXTURE_2D, this->text1);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(0, 0, 1);

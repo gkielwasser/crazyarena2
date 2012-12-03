@@ -93,6 +93,16 @@ class Character {
 			glPopMatrix();
 	   }
 
+	   Position* backPosition() {
+		   Position* position = new Position(this->x - speed, this->y - speed, this->z);
+
+		   return position;
+	   };
+
+	   void back() {
+		   this->x -= speed;
+	   }
+
 	   Position* frontPosition() {
 		   Position* position = new Position(this->x + speed, this->y - speed, this->z);
 

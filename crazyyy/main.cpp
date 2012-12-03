@@ -136,7 +136,13 @@ int main(int argc, char *argv[]) {
 		}
 		if (keystate[SDLK_DOWN]) {
 			if (back == true) {
-				//character->back();
+				Position* backPosition = character->backPosition();
+
+				if (map->getCube(backPosition->getX(), backPosition->getY(), backPosition->getZ()) != 0) {
+					character->back();
+					moved = true;
+				}
+
 				back = false;
 			}
 			else {

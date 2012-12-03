@@ -12,7 +12,7 @@ class CharacterBuilder {
 
 			Character* createCharacter() {
 				Color* green = new Color(73, 115, 88);
-				Character* character = new Character(0, 0, 1, 1, 1, green);
+				Character* character = new Character(0, 1, 0, 1, 1, green);
 
  				return character;
 			};

@@ -16,7 +16,7 @@ public:
 			double ymap, double zmap, Color* color) {
 		Cube* cube;
 
-		if (type == 1) {
+		if (type == 0) {
 			cube = this->createFloor(x, y, z, h, l, xmap, ymap, zmap, color);
 		} else {
 			cube = this->createObstacle(x, y, z, h, l, xmap, ymap, zmap, color);
