@@ -55,6 +55,7 @@ public:
 		glVertex3d(0, 1, 0);
 		glEnd();
 
+		glBindTexture(GL_TEXTURE_2D, this->topTexture);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(0, 0, 0);
@@ -66,6 +67,7 @@ public:
 		glVertex3d(0, 0, 1);
 		glEnd();
 
+		glBindTexture(GL_TEXTURE_2D, this->topTexture);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(1, 0, 0);
@@ -77,6 +79,7 @@ public:
 		glVertex3d(1, 0, 1);
 		glEnd();
 
+		glBindTexture(GL_TEXTURE_2D, this->topTexture);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(1, 1, 0);
@@ -88,6 +91,7 @@ public:
 		glVertex3d(1, 1, 1);
 		glEnd();
 
+		glBindTexture(GL_TEXTURE_2D, this->topTexture);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(0, 0, 0);
@@ -99,6 +103,7 @@ public:
 		glVertex3d(0, 0, 1);
 		glEnd();
 
+		glBindTexture(GL_TEXTURE_2D, this->topTexture);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(0, 0, 1);
