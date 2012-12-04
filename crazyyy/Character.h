@@ -50,7 +50,7 @@ public:
 
 		glColor3ub(this->color->getRed(), this->color->getGreen(), this->color->getBlue());
 		glTranslated(this->x, this->y, this->z);
-		//glRotated(rotAngle,0,1,0);
+		glRotated(rotAngle,0,1,0);
 
 		//glBindTexture(GL_TEXTURE_2D, this->text1);
 		glBegin(GL_QUADS);
@@ -146,22 +146,23 @@ public:
 	}
 
 	Position* rightPosition() {
-		this->rotAngle = -90;
+
 		Position* position = new Position(this->x, this->y - speed, this->z + speed);
 		return position;
 	}
 
 	void right() {
+		this->rotAngle = 90;
 		this->z += speed;
 	}
 
 	Position* leftPosition() {
-		this->rotAngle = 90;
 		Position* position = new Position(this->x, this->y - speed, this->z - speed);
 		return position;
 	}
 
 	void left() {
+		this->rotAngle = -90;
 		this->z -= speed;
 	}
 
@@ -171,6 +172,7 @@ public:
 	}
 
 	void up() {
+		this->rotAngle = 0;
 		//Test le niveau du perso
 		if (this->y < 2 && !this->isJumping) {
 			//Début du saut

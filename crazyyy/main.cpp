@@ -9,6 +9,7 @@
 #include "Position.h"
 #include "sdlglutils.h"
 #include <iostream>
+#include "math.h"
 
 #define LARGEUR 600
 #define HAUTEUR 400
@@ -47,7 +48,7 @@ int main(int argc, char *argv[]) {
 	 *  	p4: far: pour qu'un objet puisse s'afficher sur l'écran, il faut qu'il se situe entre les zones near et far, sinon il ne sera pas affiché.
 	 */
 	//gluPerspective (20, (double)LARGEUR/HAUTEUR, 1, 100);
-	gluPerspective(45, (double) LARGEUR / HAUTEUR, 1, 100);
+	gluPerspective(70, (double) LARGEUR / HAUTEUR, 1, 100);
 	SDL_Flip(ecran);
 
 	SDL_Event event;
@@ -201,12 +202,16 @@ int main(int argc, char *argv[]) {
 		/*
 		 * Calcul des nouvelles coordonnées
 		 */
-
-
-
+		/*
 		gluLookAt(character->getX() + cameraX, character->getY() + cameraY,
-				character->getZ() + cameraZ, character->getX(), character->getY()+2,
+				character->getZ() + cameraZ , character->getX(), character->getY()+2,
 				character->getZ(), upX, upY, upZ);
+		*/
+
+		gluLookAt(character->getX() -cos(character->rotAngle/180 * 3.141592654f), character->getY() + cameraY,
+						character->getZ()  -sin(character->rotAngle/180 * 3.141592654f), character->getX(), character->getY()+2,
+						character->getZ(), upX, upY, upZ);
+
 		//gluLookAt(cameraX, cameraY, cameraZ, 0, 0, 0, upX, upY, upZ);
 
 		// On fait tourner le monde (caméra).
