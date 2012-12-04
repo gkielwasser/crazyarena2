@@ -1,3 +1,7 @@
 .cproject
 .project
 /Debug
+<<<<<<< HEAD
+=======
+.settings
+>>>>>>> refs/remotes/origin/master
