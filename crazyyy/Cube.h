@@ -20,9 +20,6 @@ public:
 	double zmap;
 
 	GLuint topTexture;
-	int text;
-
-	//Temporaire pour mieux visualiser les cubes(couleur du cube)
 	Color* color;
 
 	Cube(double x, double y, double z, double h, double l, double xmap,
@@ -37,16 +34,6 @@ public:
 		this->zmap = zmap;
 		this->color = color;
 		this->topTexture = topTexture;
-
-		text = loadTexture("textures/ice0123.jpg");
-
-		char tampon[UCHAR_MAX];
-
-			if (getcwd (tampon, UCHAR_MAX) == NULL) {
-
-			}
-
-			puts (tampon);
 	}
 
 	~Cube();
@@ -58,7 +45,7 @@ public:
 
 		glColor3ub(this->color->getRed(), this->color->getGreen(), this->color->getBlue());
 
-		glBindTexture(GL_TEXTURE_2D, text);
+		glBindTexture(GL_TEXTURE_2D, this->topTexture);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(0, 0, 0);
@@ -70,7 +57,7 @@ public:
 		glVertex3d(0, 1, 0);
 		glEnd();
 
-		glBindTexture(GL_TEXTURE_2D, text);
+		glBindTexture(GL_TEXTURE_2D, this->topTexture);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(0, 0, 0);
@@ -82,7 +69,7 @@ public:
 		glVertex3d(0, 0, 1);
 		glEnd();
 
-		glBindTexture(GL_TEXTURE_2D, text);
+		glBindTexture(GL_TEXTURE_2D, this->topTexture);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(1, 0, 0);
@@ -94,7 +81,7 @@ public:
 		glVertex3d(1, 0, 1);
 		glEnd();
 
-		glBindTexture(GL_TEXTURE_2D, text);
+		glBindTexture(GL_TEXTURE_2D, this->topTexture);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(1, 1, 0);
@@ -106,7 +93,7 @@ public:
 		glVertex3d(1, 1, 1);
 		glEnd();
 
-		glBindTexture(GL_TEXTURE_2D, text);
+		glBindTexture(GL_TEXTURE_2D, this->topTexture);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(0, 0, 0);
@@ -118,7 +105,7 @@ public:
 		glVertex3d(0, 0, 1);
 		glEnd();
 
-		glBindTexture(GL_TEXTURE_2D, text);
+		glBindTexture(GL_TEXTURE_2D, this->topTexture);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(0, 0, 1);
