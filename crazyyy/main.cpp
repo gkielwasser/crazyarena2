@@ -10,8 +10,8 @@
 #include "sdlglutils.h"
 #include <iostream>
 
-#define LARGEUR 600
-#define HAUTEUR 400
+#define LARGEUR 1024
+#define HAUTEUR 768
 #define FRAMES_PER_SECOND 25
 
 using namespace std;

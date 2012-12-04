@@ -1,7 +1,12 @@
 #ifndef CUBE_H_INCLUDED
 #define CUBE_H_INCLUDED
-#include "sdlglutils.h"
 #include "Color.h"
+#include "sdlglutils.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
+#include <unistd.h>
 
 class Cube {
 public:
@@ -15,12 +20,13 @@ public:
 	double zmap;
 
 	GLuint topTexture;
+	int text;
 
 	//Temporaire pour mieux visualiser les cubes(couleur du cube)
 	Color* color;
 
 	Cube(double x, double y, double z, double h, double l, double xmap,
-			double ymap, double zmap, Color* color) {
+			double ymap, double zmap, Color* color, GLuint topTexture) {
 		this->x = x;
 		this->y = y;
 		this->z = z;
@@ -30,8 +36,17 @@ public:
 		this->ymap = ymap;
 		this->zmap = zmap;
 		this->color = color;
+		this->topTexture = topTexture;
 
-		this->topTexture = loadTexture("textures/ice01.jpg");
+		text = loadTexture("textures/ice0123.jpg");
+
+		char tampon[UCHAR_MAX];
+
+			if (getcwd (tampon, UCHAR_MAX) == NULL) {
+
+			}
+
+			puts (tampon);
 	}
 
 	~Cube();
@@ -43,7 +58,7 @@ public:
 
 		glColor3ub(this->color->getRed(), this->color->getGreen(), this->color->getBlue());
 
-		glBindTexture(GL_TEXTURE_2D, this->topTexture);
+		glBindTexture(GL_TEXTURE_2D, text);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(0, 0, 0);
@@ -55,7 +70,7 @@ public:
 		glVertex3d(0, 1, 0);
 		glEnd();
 
-		glBindTexture(GL_TEXTURE_2D, this->topTexture);
+		glBindTexture(GL_TEXTURE_2D, text);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(0, 0, 0);
@@ -67,7 +82,7 @@ public:
 		glVertex3d(0, 0, 1);
 		glEnd();
 
-		glBindTexture(GL_TEXTURE_2D, this->topTexture);
+		glBindTexture(GL_TEXTURE_2D, text);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(1, 0, 0);
@@ -79,7 +94,7 @@ public:
 		glVertex3d(1, 0, 1);
 		glEnd();
 
-		glBindTexture(GL_TEXTURE_2D, this->topTexture);
+		glBindTexture(GL_TEXTURE_2D, text);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(1, 1, 0);
@@ -91,7 +106,7 @@ public:
 		glVertex3d(1, 1, 1);
 		glEnd();
 
-		glBindTexture(GL_TEXTURE_2D, this->topTexture);
+		glBindTexture(GL_TEXTURE_2D, text);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(0, 0, 0);
@@ -103,7 +118,7 @@ public:
 		glVertex3d(0, 0, 1);
 		glEnd();
 
-		glBindTexture(GL_TEXTURE_2D, this->topTexture);
+		glBindTexture(GL_TEXTURE_2D, text);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(0, 0, 1);
