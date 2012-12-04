@@ -17,7 +17,7 @@ public:
 	PlateBuilder(const PlateBuilder &);
 	~PlateBuilder();
 
-	Plate* createPlate(double x, double y, double z, Color* color) {
+	Plate* createPlate(double x, double y, double z) {
 		CubeFactory* cf = new CubeFactory();
 
 		//Un vecteur par ligne
