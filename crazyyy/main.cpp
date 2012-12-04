@@ -11,8 +11,8 @@
 #include <iostream>
 #include "math.h"
 
-#define LARGEUR 600
-#define HAUTEUR 400
+#define LARGEUR 800
+#define HAUTEUR 600
 #define FRAMES_PER_SECOND 25
 
 using namespace std;
