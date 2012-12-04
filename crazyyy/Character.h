@@ -151,7 +151,7 @@ public:
 	}
 
 	void right() {
-		this->x += float(sin(this->rotAngle / 180 * 3.141592654f));
+		this->x -= float(sin(this->rotAngle / 180 * 3.141592654f));
 		this->z += float(cos(this->rotAngle / 180 * 3.141592654f));
 	}
 
@@ -161,7 +161,7 @@ public:
 	}
 
 	void left() {
-		this->x -= float(sin(this->rotAngle / 180 * 3.141592654f));
+		this->x += float(sin(this->rotAngle / 180 * 3.141592654f));
 		this->z -= float(cos(this->rotAngle / 180 * 3.141592654f));
 	}
 
@@ -188,10 +188,10 @@ public:
 	}
 
 	void rotateRight() {
-		this->rotAngle = this->rotAngle + 5;
+		this->rotAngle = this->rotAngle + 45;
 	}
 	void rotateLeft() {
-		this->rotAngle = this->rotAngle - 5;
+		this->rotAngle = this->rotAngle - 45;
 	}
 
 	void down() {
