@@ -20,8 +20,7 @@ public:
 	~CubeFactory();
 
 	Cube* createCube(double type, double x, double y, double z, double h, double l, double xmap,
-			double ymap, double zmap, Color* color, GLuint topTexture) {
-
+			double ymap, double zmap) {
 		Cube* cube;
 
 		if (type == 0) {
@@ -36,19 +35,19 @@ public:
 
 private:
 	Floor* createFloor(double x, double y, double z,  double h, double l, double xmap,
-			double ymap, double zmap, Color* color, GLuint topTexture) {
-		Floor* floor = new Floor(x, y, z, h, l, xmap, ymap, zmap, color, topTexture);
+			double ymap, double zmap, Color* color, GLuint texture) {
+		Floor* floor = new Floor(x, y, z, h, l, xmap, ymap, zmap, color,texture);
 
 		return floor;
 	}
 
 	Obstacle* createObstacle(double x, double y, double z, double h, double l, double xmap,
-			double ymap, double zmap,Color* color, GLuint topTexture) {
+			double ymap, double zmap, Color* color, GLuint texture) {
 		Obstacle* obstacle = new Obstacle(x, y, z, h, l, xmap, ymap, zmap,
-				color, topTexture);
+				color,texture);
 
 		return obstacle;
-	};
+	}
 };
 
 #endif // CUBEFACTORY_H_INCLUDED

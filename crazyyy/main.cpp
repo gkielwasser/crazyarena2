@@ -11,8 +11,8 @@
 #include <iostream>
 #include "math.h"
 
-#define LARGEUR 1024
-#define HAUTEUR 768
+#define LARGEUR 600
+#define HAUTEUR 400
 #define FRAMES_PER_SECOND 25
 
 using namespace std;
@@ -64,9 +64,9 @@ int main(int argc, char *argv[]) {
 	Uint32 last_time = SDL_GetTicks();
 	Uint8 *keystate = SDL_GetKeyState(NULL);
 
-	//int cameraX = 0;
+	int cameraX = 0;
 	int cameraY = 2;
-	//int cameraZ = 0;
+	int cameraZ = 0;
 	/* Passer en mode Création de la carte: x=38;
 	 * Passer en mode Jeu: x=132
 	 *
@@ -105,7 +105,7 @@ int main(int argc, char *argv[]) {
 		//if(current_time > lastKey + KeysInterval){
 		if (true) {
 			if (keystate[SDLK_RIGHT]) {
-				//Position* rightPosition = character->rightPosition();
+				Position* rightPosition = character->rightPosition();
 
 				//if (character->isJumping || map->getCube(rightPosition->getX(), rightPosition->getY(),rightPosition->getZ()) != 0) {
 				character->right();
@@ -116,7 +116,7 @@ int main(int argc, char *argv[]) {
 				//x++;
 			}
 			if (keystate[SDLK_LEFT]) {
-				//Position* leftPosition = character->leftPosition();
+				Position* leftPosition = character->leftPosition();
 
 				//if (character->isJumping || map->getCube(leftPosition->getX(), leftPosition->getY(),leftPosition->getZ()) != 0) {
 				character->left();
@@ -127,7 +127,7 @@ int main(int argc, char *argv[]) {
 				//x--;
 			}
 			if (keystate[SDLK_UP]) {
-				//Position* frontPosition = character->frontPosition();
+				Position* frontPosition = character->frontPosition();
 
 				//if (character->isJumping || map->getCube(frontPosition->getX(), frontPosition->getY(),frontPosition->getZ()) != 0) {
 				character->front();
@@ -139,7 +139,7 @@ int main(int argc, char *argv[]) {
 			}
 			if (keystate[SDLK_DOWN]) {
 				if (back == true) {
-					//Position* backPosition = character->backPosition();
+					Position* backPosition = character->backPosition();
 
 					//if (map->getCube(backPosition->getX(), backPosition->getY(), backPosition->getZ()) != 0) {
 					character->back();

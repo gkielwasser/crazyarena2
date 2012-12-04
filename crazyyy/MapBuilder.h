@@ -20,9 +20,8 @@ public:
 	Map* createMap() {
 		//CubeFactory* cf = new CubeFactory();
 
-				//Création de 2 couleurs(temporaire)
-				//Color* blue = new Color(255, 255, 255);
-				//Color* blue2 = new Color(51, 204, 255);
+		//Création de 2 couleurs(temporaire)
+
 
 		PlateBuilder* p = new PlateBuilder();
 

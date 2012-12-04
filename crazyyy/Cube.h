@@ -1,12 +1,7 @@
 #ifndef CUBE_H_INCLUDED
 #define CUBE_H_INCLUDED
-#include "Color.h"
 #include "sdlglutils.h"
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>
-#include <unistd.h>
+#include "Color.h"
 
 class Cube {
 public:
@@ -34,6 +29,7 @@ public:
 		this->zmap = zmap;
 		this->color = color;
 		this->topTexture = topTexture;
+
 	}
 
 	~Cube();
