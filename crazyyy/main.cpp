@@ -24,6 +24,12 @@ float upX = 0, upY = 1, upZ = 0;
 
 float lastx, lasty;
 
+float camX, camZ;
+
+//COntrôle vitesse touche clavier
+double KeysInterval = 100;
+Uint32 lastKey;
+
 int main(int argc, char *argv[]) {
 	// Initialisation de la SDL
 	SDL_Init(SDL_INIT_VIDEO);
@@ -58,7 +64,7 @@ int main(int argc, char *argv[]) {
 	Uint32 last_time = SDL_GetTicks();
 	Uint8 *keystate = SDL_GetKeyState(NULL);
 
-	int cameraX = -5;
+	int cameraX = 0;
 	int cameraY = 2;
 	int cameraZ = 0;
 	/* Passer en mode Création de la carte: x=38;
@@ -93,96 +99,103 @@ int main(int argc, char *argv[]) {
 			break;
 		}
 
-		if (keystate[SDLK_RIGHT]) {
-			Position* rightPosition = character->rightPosition();
+		//Sauvegarde de quand la dernière touche à été pressée
+		//lastKey = SDL_GetTicks();
+		//cout <<"CT:"<< current_time  << "  LK" <<  lastKey <<  endl;
+		//if(current_time > lastKey + KeysInterval){
+		if (true) {
+			if (keystate[SDLK_RIGHT]) {
+				Position* rightPosition = character->rightPosition();
 
-			if (character->isJumping || map->getCube(rightPosition->getX(), rightPosition->getY(),
-					rightPosition->getZ()) != 0) {
+				//if (character->isJumping || map->getCube(rightPosition->getX(), rightPosition->getY(),rightPosition->getZ()) != 0) {
 				character->right();
 				moved = true;
+				//}
+
+				back = false;
+				//x++;
 			}
+			if (keystate[SDLK_LEFT]) {
+				Position* leftPosition = character->leftPosition();
 
-			back = false;
-			//x++;
-		}
-		if (keystate[SDLK_LEFT]) {
-			Position* leftPosition = character->leftPosition();
-
-			if (character->isJumping || map->getCube(leftPosition->getX(), leftPosition->getY(),
-					leftPosition->getZ()) != 0) {
+				//if (character->isJumping || map->getCube(leftPosition->getX(), leftPosition->getY(),leftPosition->getZ()) != 0) {
 				character->left();
 				moved = true;
+				//}
+
+				back = false;
+				//x--;
 			}
+			if (keystate[SDLK_UP]) {
+				Position* frontPosition = character->frontPosition();
 
-			back = false;
-			//x--;
-		}
-		if (keystate[SDLK_UP]) {
-			Position* frontPosition = character->frontPosition();
-
-			if (character->isJumping || map->getCube(frontPosition->getX(), frontPosition->getY(),
-					frontPosition->getZ()) != 0) {
+				//if (character->isJumping || map->getCube(frontPosition->getX(), frontPosition->getY(),frontPosition->getZ()) != 0) {
 				character->front();
 				moved = true;
+				//}
+
+				back = false;
+				//cameraZ--;
 			}
+			if (keystate[SDLK_DOWN]) {
+				if (back == true) {
+					Position* backPosition = character->backPosition();
 
-			back = false;
-			//cameraZ--;
-		}
-		if (keystate[SDLK_DOWN]) {
-			if (back == true) {
-				Position* backPosition = character->backPosition();
-
-				if (map->getCube(backPosition->getX(), backPosition->getY(), backPosition->getZ()) != 0) {
+					//if (map->getCube(backPosition->getX(), backPosition->getY(), backPosition->getZ()) != 0) {
 					character->back();
 					moved = true;
+					//}
+
+					character->back();
+					back = false;
+					//TOTO
+				} else {
+					back = true;
 				}
+				//y--;
+			}
+			if (keystate[SDLK_SPACE]) {
+				//Position* frontPosition = character->frontPosition();
 
-				character->back();
+				//if (map->getCube(frontPosition->getX(), frontPosition->getY(), frontPosition->getZ()) != 0) {
+
+				//On regarde quand a été fait le dernier faut
+				if (character->lastJump_time + 1000 < current_time) {
+					character->up();
+					moved = true;
+				}
+				//}
+
 				back = false;
-				//TOTO
-			} else {
-				back = true;
 			}
-			//y--;
-		}
-		if (keystate[SDLK_SPACE]) {
-			//Position* frontPosition = character->frontPosition();
+			if (keystate[SDLK_LSHIFT]) {
+				//Position* frontPosition = character->frontPosition();
 
-			//if (map->getCube(frontPosition->getX(), frontPosition->getY(), frontPosition->getZ()) != 0) {
+				//if (map->getCube(frontPosition->getX(), frontPosition->getY(), frontPosition->getZ()) != 0) {
 
-			//On regarde quand a été fait le dernier faut
-			if(character->lastJump_time + 1000 < current_time){
-				character->up();
+				character->down();
 				moved = true;
+
+				back = false;
 			}
-			//}
+			if (keystate[SDLK_q]) {
+				character->rotateLeft();
+				cout << "camX:" << camX << endl;
+				cout << "camZ:" << camZ << endl;
+				//cout << "c.angle:" << character->rotAngle << endl;
+			}
+			if (keystate[SDLK_s]) {
+				character->rotateRight();
+				cout << "camX:" << camX << endl;
+				cout << "camZ:" << camZ << endl;
+				cout<<"diff:"<<float(cos(character->rotAngle / 180 * 3.141592654f))<<endl;
+				//cout << "c.angle:" << character->rotAngle << endl;
+			}
 
-			back = false;
-		}
-		if (keystate[SDLK_LSHIFT]) {
-			//Position* frontPosition = character->frontPosition();
-
-			//if (map->getCube(frontPosition->getX(), frontPosition->getY(), frontPosition->getZ()) != 0) {
-
-			character->down();
-			moved = true;
-
-			back = false;
-		}
-		if (keystate[SDLK_q]) {
-			cameraY++;
-			cout << "cameraX:" << cameraY << endl;
-		}
-		if (keystate[SDLK_s]) {
-			cameraY--;
-			cout << "cameraX:" << cameraY << endl;
-		}
-
-		if (moved == true) {
-			cout << "x: " << character->getX() << " y:" << character->getY() << " z:"
-					<< character->getZ() << endl;
-			moved = false;
+			if (moved == true) {
+				//cout << "x: " << character->getX() << " y:" << character->getY() << " z:"<< character->getZ() << endl;
+				moved = false;
+			}
 		}
 
 		// On met en pause (Frame per second)
@@ -202,23 +215,11 @@ int main(int argc, char *argv[]) {
 		// On efface la fenêtre (pour la redessiner)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		// On place la caméra(cela permet d'avancer automatiquement la caméra en incrémentant les variable cameraX,Y,Z).
-		//cameraZ--;
+		camX = character->getX() - float(cos(character->rotAngle / 180 * 3.141592654f));
+		camZ = character->getZ() - float(sin(character->rotAngle / 180 * 3.141592654f));
 
-		/*
-		 * Calcul des nouvelles coordonnées
-		 */
-		/*
-		gluLookAt(character->getX() + cameraX, character->getY() + cameraY,
-				character->getZ() + cameraZ , character->getX(), character->getY()+2,
-				character->getZ(), upX, upY, upZ);
-		*/
-
-		gluLookAt(character->getX() -cos(character->rotAngle/180 * 3.141592654f), character->getY() + cameraY,
-						character->getZ()  -sin(character->rotAngle/180 * 3.141592654f), character->getX(), character->getY()+2,
-						character->getZ(), upX, upY, upZ);
-
-		//gluLookAt(cameraX, cameraY, cameraZ, 0, 0, 0, upX, upY, upZ);
+		gluLookAt(camX, character->getY() + cameraY, camZ, character->getX(),
+				character->getY() + cameraY, character->getZ(), upX, upY, upZ);
 
 		// On fait tourner le monde (caméra).
 		//glTranslated(character->getX(),0,0);

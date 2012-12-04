@@ -3,7 +3,7 @@
 #include "sdlglutils.h"
 #include "Color.h"
 #include "Position.h"
-
+#include "math.h"
 using namespace std;
 
 class Character {
@@ -17,11 +17,10 @@ public:
 	Uint32 jumpStart_time;
 	Uint32 lastJump_time;
 	bool isJumping;
+	bool isTurningLeft;
+	bool isTurningRight;
 	bool isDown;
-	double rotAngle;
-
-	GLuint text1;
-	GLuint text2;
+	float rotAngle;
 
 	//Temporaire pour mieux visualiser les cubes(couleur du cube)
 	Color* color;
@@ -37,20 +36,18 @@ public:
 		this->isDown = true;
 		this->lastJump_time = NULL;
 		this->rotAngle = 0;
-		//this->text1 = loadTexture("textures/crate1.jpg");
-		//this->text2 = loadTexture("textures/crate2.jpg");
-
 		this->speed = 1;
 	}
 
 	~Character();
 
 	void draw() {
+
 		glPushMatrix();
 
 		glColor3ub(this->color->getRed(), this->color->getGreen(), this->color->getBlue());
 		glTranslated(this->x, this->y, this->z);
-		glRotated(rotAngle,0,1,0);
+		glRotated(rotAngle, 0, -1, 0);
 
 		//glBindTexture(GL_TEXTURE_2D, this->text1);
 		glBegin(GL_QUADS);
@@ -133,7 +130,8 @@ public:
 	}
 
 	void front() {
-		this->x += speed;
+		this->x += float(cos(this->rotAngle / 180 * 3.141592654f));
+		this->z += float(sin(this->rotAngle / 180 * 3.141592654f));
 	}
 
 	Position* backPosition() {
@@ -142,7 +140,8 @@ public:
 	}
 
 	void back() {
-		this->x -= speed;
+		this->x -= float(cos(this->rotAngle / 180 * 3.141592654f));
+		this->z -= float(sin(this->rotAngle / 180 * 3.141592654f));
 	}
 
 	Position* rightPosition() {
@@ -152,8 +151,8 @@ public:
 	}
 
 	void right() {
-		this->rotAngle = 90;
-		this->z += speed;
+		this->x += float(sin(this->rotAngle / 180 * 3.141592654f));
+		this->z += float(cos(this->rotAngle / 180 * 3.141592654f));
 	}
 
 	Position* leftPosition() {
@@ -162,8 +161,8 @@ public:
 	}
 
 	void left() {
-		this->rotAngle = -90;
-		this->z -= speed;
+		this->x -= float(sin(this->rotAngle / 180 * 3.141592654f));
+		this->z -= float(cos(this->rotAngle / 180 * 3.141592654f));
 	}
 
 	Position* upPosition() {
@@ -179,7 +178,7 @@ public:
 			this->jumpStart_time = SDL_GetTicks();
 			this->isJumping = true;
 			this->isDown = false;
-			this->y += speed;
+			this->y += speed * 2;
 		}
 	}
 
@@ -188,10 +187,17 @@ public:
 		return position;
 	}
 
+	void rotateRight() {
+		this->rotAngle = this->rotAngle + 5;
+	}
+	void rotateLeft() {
+		this->rotAngle = this->rotAngle - 5;
+	}
+
 	void down() {
 		this->lastJump_time = SDL_GetTicks();
-		if (this->y > 1)
-			this->y -= speed;
+
+		this->y -= speed * 2;
 		this->isJumping = false;
 	}
 
