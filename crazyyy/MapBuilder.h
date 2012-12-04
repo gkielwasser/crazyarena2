@@ -19,8 +19,13 @@ class MapBuilder {
 				//CubeFactory* cf = new CubeFactory();
 
 				//Création de 2 couleurs(temporaire)
+<<<<<<< HEAD
 				Color* blue = new Color(51, 102, 255);
 				Color* blue2 = new Color(51, 204, 255);
+=======
+				Color* blue = new Color(255, 255, 255);
+				//Color* blue2 = new Color(51, 204, 255);
+>>>>>>> refs/remotes/origin/master
 
 				PlateBuilder* p = new PlateBuilder();
 
