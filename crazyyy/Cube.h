@@ -15,12 +15,10 @@ public:
 	double zmap;
 
 	GLuint topTexture;
-
-	//Temporaire pour mieux visualiser les cubes(couleur du cube)
 	Color* color;
 
 	Cube(double x, double y, double z, double h, double l, double xmap,
-			double ymap, double zmap, Color* color) {
+			double ymap, double zmap, Color* color, GLuint topTexture) {
 		this->x = x;
 		this->y = y;
 		this->z = z;
@@ -30,8 +28,8 @@ public:
 		this->ymap = ymap;
 		this->zmap = zmap;
 		this->color = color;
+		this->topTexture = topTexture;
 
-		this->topTexture = loadTexture("textures/ice01.jpg");
 	}
 
 	~Cube();

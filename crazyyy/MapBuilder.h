@@ -10,89 +10,86 @@
 using namespace std;
 
 class MapBuilder {
-		public:
-			MapBuilder(){};
-			MapBuilder(const MapBuilder &);
-			~MapBuilder();
+public:
+	MapBuilder() {
+	}
+	;
+	MapBuilder(const MapBuilder &);
+	~MapBuilder();
 
-			Map* createMap() {
-				//CubeFactory* cf = new CubeFactory();
+	Map* createMap() {
+		//CubeFactory* cf = new CubeFactory();
 
-				//Création de 2 couleurs(temporaire)
-<<<<<<< HEAD
-				Color* blue = new Color(51, 102, 255);
-				Color* blue2 = new Color(51, 204, 255);
-=======
-				Color* blue = new Color(255, 255, 255);
-				//Color* blue2 = new Color(51, 204, 255);
->>>>>>> refs/remotes/origin/master
+		//Création de 2 couleurs(temporaire)
 
-				PlateBuilder* p = new PlateBuilder();
 
-				vector<Plate*> plates;
+		PlateBuilder* p = new PlateBuilder();
 
-				//Line 1
-				plates.push_back(p->createPlate(0,0,0,blue));
-				plates.push_back(p->createPlate(4,0,0,blue));
-				plates.push_back(p->createPlate(8,0,0,blue));
-				plates.push_back(p->createPlate(12,0,0,blue));
-				plates.push_back(p->createPlate(16,0,0,blue));
-				plates.push_back(p->createPlate(20,0,0,blue));
+		vector<Plate*> plates;
 
-				//Ligne 2
-				plates.push_back(p->createPlate(0,0,4,blue));
-				plates.push_back(p->createPlate(20,0,4,blue));
+		//Line 1
+		plates.push_back(p->createPlate(0, 0, 0));
+		plates.push_back(p->createPlate(4, 0, 0));
+		plates.push_back(p->createPlate(8, 0, 0));
+		plates.push_back(p->createPlate(12, 0, 0));
+		plates.push_back(p->createPlate(16, 0, 0));
+		plates.push_back(p->createPlate(20, 0, 0));
 
-				//Ligne 3
-				plates.push_back(p->createPlate(0,0,8,blue));
-				plates.push_back(p->createPlate(4,0,8,blue));
-				plates.push_back(p->createPlate(8,0,8,blue));
-				plates.push_back(p->createPlate(12,0,8,blue));
-				plates.push_back(p->createPlate(16,0,8,blue));
-				plates.push_back(p->createPlate(20,0,8,blue));
+		//Ligne 2
+		plates.push_back(p->createPlate(0, 0, 4));
+		plates.push_back(p->createPlate(20, 0, 4));
 
-				//Ligne 3 LVL3
+		//Ligne 3
+		plates.push_back(p->createPlate(0, 0, 8));
+		plates.push_back(p->createPlate(4, 0, 8));
+		plates.push_back(p->createPlate(8, 0, 8));
+		plates.push_back(p->createPlate(12, 0, 8));
+		plates.push_back(p->createPlate(16, 0, 8));
+		plates.push_back(p->createPlate(20, 0, 8));
 
-				plates.push_back(p->createPlate(0,3,8,blue2));
-				plates.push_back(p->createPlate(4,3,8,blue2));
-				plates.push_back(p->createPlate(8,3,8,blue2));
-				plates.push_back(p->createPlate(12,3,8,blue2));
-				plates.push_back(p->createPlate(16,3,8,blue2));
-				plates.push_back(p->createPlate(20,3,8,blue2));
+		//Ligne 3 LVL3
 
-				//Ligne 4
-				plates.push_back(p->createPlate(0,0,12,blue));
-				plates.push_back(p->createPlate(16,0,12,blue));
+		plates.push_back(p->createPlate(0,3,8));
+		plates.push_back(p->createPlate(4,3,8));
+		plates.push_back(p->createPlate(8,3,8));
+		plates.push_back(p->createPlate(12,3,8));
+		plates.push_back(p->createPlate(16,3,8));
+		plates.push_back(p->createPlate(20,3,8));
 
-				//Ligne 5
-				plates.push_back(p->createPlate(0,0,16,blue));
-				plates.push_back(p->createPlate(8,0,16,blue));
-				plates.push_back(p->createPlate(12,0,16,blue));
-				plates.push_back(p->createPlate(16,0,16,blue));
-				plates.push_back(p->createPlate(20,0,16,blue));
+		//Ligne 4
+		plates.push_back(p->createPlate(0, 0, 12));
+		plates.push_back(p->createPlate(16, 0, 12));
 
-				//Ligne 6
-				plates.push_back(p->createPlate(0,0,20,blue));
-				plates.push_back(p->createPlate(4,0,20,blue));
-				plates.push_back(p->createPlate(8,0,20,blue));
+		//Ligne 5
+		plates.push_back(p->createPlate(0, 0, 16));
+		plates.push_back(p->createPlate(8, 0, 16));
+		plates.push_back(p->createPlate(12, 0, 16));
+		plates.push_back(p->createPlate(16, 0, 16));
+		plates.push_back(p->createPlate(20, 0, 16));
 
-				//Ligne 6 LVL3
+		//Ligne 6
+		plates.push_back(p->createPlate(0, 0, 20));
+		plates.push_back(p->createPlate(4, 0, 20));
+		plates.push_back(p->createPlate(8, 0, 20));
 
-				plates.push_back(p->createPlate(0,4,20,blue2));
-				plates.push_back(p->createPlate(4,4,20,blue2));
-				plates.push_back(p->createPlate(8,4,20,blue2));
+		//Ligne 6 LVL3
 
-				//Création d'une map avec son vecteur de plate
-				Map* map = new Map(plates);
+		plates.push_back(p->createPlate(0,4,20));
+		plates.push_back(p->createPlate(4,4,20));
+		plates.push_back(p->createPlate(8,4,20));
 
- 				return map;
-			};
-			/*
-			Plate* createPlaque(){
-				//Plate* plate = new Plate(cubes);
-				return plate;
-			}
-			*/
+		//Création d'une map avec son vecteur de plate
+		Map* map = new Map(plates);
+
+		return map;
+	}
+	;
+	/*
+	 Plate* createPlaque(){
+	 //Plate* plate = new Plate(cubes);
+	 return plate;
+	 }
+	 */
 };
 
 #endif // MAPBUILDER_H_INCLUDED
