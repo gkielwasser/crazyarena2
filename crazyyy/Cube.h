@@ -14,11 +14,15 @@ public:
 	double ymap;
 	double zmap;
 
-	GLuint topTexture;
+	/*
+	 * Textures
+	 * Ordre:Haut,Bas,Gauche,Droite,Devant,Derrière
+	 */
+	GLuint* textures;
 	Color* color;
 
 	Cube(double x, double y, double z, double h, double l, double xmap,
-			double ymap, double zmap, Color* color, GLuint topTexture) {
+			double ymap, double zmap, Color* color, GLuint* textures) {
 		this->x = x;
 		this->y = y;
 		this->z = z;
@@ -28,8 +32,7 @@ public:
 		this->ymap = ymap;
 		this->zmap = zmap;
 		this->color = color;
-		this->topTexture = topTexture;
-
+		this->textures = textures;
 	}
 
 	~Cube();
@@ -41,7 +44,7 @@ public:
 
 		glColor3ub(this->color->getRed(), this->color->getGreen(), this->color->getBlue());
 
-		glBindTexture(GL_TEXTURE_2D, this->topTexture);
+		glBindTexture(GL_TEXTURE_2D, this->textures[0]);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(0, 0, 0);
@@ -53,7 +56,7 @@ public:
 		glVertex3d(0, 1, 0);
 		glEnd();
 
-		glBindTexture(GL_TEXTURE_2D, this->topTexture);
+		glBindTexture(GL_TEXTURE_2D, this->textures[1]);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(0, 0, 0);
@@ -65,7 +68,7 @@ public:
 		glVertex3d(0, 0, 1);
 		glEnd();
 
-		glBindTexture(GL_TEXTURE_2D, this->topTexture);
+		glBindTexture(GL_TEXTURE_2D, this->textures[2]);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(1, 0, 0);
@@ -77,7 +80,7 @@ public:
 		glVertex3d(1, 0, 1);
 		glEnd();
 
-		glBindTexture(GL_TEXTURE_2D, this->topTexture);
+		glBindTexture(GL_TEXTURE_2D, this->textures[3]);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(1, 1, 0);
@@ -89,7 +92,7 @@ public:
 		glVertex3d(1, 1, 1);
 		glEnd();
 
-		glBindTexture(GL_TEXTURE_2D, this->topTexture);
+		glBindTexture(GL_TEXTURE_2D, this->textures[4]);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(0, 0, 0);
@@ -101,7 +104,7 @@ public:
 		glVertex3d(0, 0, 1);
 		glEnd();
 
-		glBindTexture(GL_TEXTURE_2D, this->topTexture);
+		glBindTexture(GL_TEXTURE_2D, this->textures[5]);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
 		glVertex3d(0, 0, 1);
