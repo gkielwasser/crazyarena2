@@ -83,7 +83,7 @@ public:
 
 		return map;
 	}
-	;
+
 	/*
 	 Plate* createPlaque(){
 	 //Plate* plate = new Plate(cubes);

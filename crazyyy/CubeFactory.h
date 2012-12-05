@@ -10,6 +10,7 @@ public:
 	Color* blue;
 	Color* blue2;
 	Color* grey;
+	Color* red;
 	GLuint floorTextures[5];
 	GLuint ObstacleTextures[5];
 
@@ -18,6 +19,7 @@ public:
 		this->blue = new Color(255, 255, 255);
 		this->blue2 = new Color(51, 204, 255);
 		this->grey = new Color(51, 51, 51);
+		this->red = new Color(255,255,0);
 
 		//Chargement des textures
 		GLuint lightFloor, darkFloor;
@@ -54,7 +56,7 @@ public:
 			cube = this->createFloor(x, y, z, h, l, xmap, ymap, zmap, this->blue,
 					this->floorTextures);
 		} else {
-			cube = this->createObstacle(x, y, z, h, l, xmap, ymap, zmap, this->blue,
+			cube = this->createObstacle(x, y, z, h, l, xmap, ymap, zmap, this->red,
 					this->ObstacleTextures);
 		}
 

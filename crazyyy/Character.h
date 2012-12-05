@@ -171,7 +171,6 @@ public:
 	}
 
 	void up() {
-		this->rotAngle = 0;
 		//Test le niveau du perso
 		if (this->y < 2 && !this->isJumping) {
 			//Début du saut
@@ -188,10 +187,10 @@ public:
 	}
 
 	void rotateRight() {
-		this->rotAngle = this->rotAngle + 45;
+		this->rotAngle = this->rotAngle + 90;
 	}
 	void rotateLeft() {
-		this->rotAngle = this->rotAngle - 45;
+		this->rotAngle = this->rotAngle - 90;
 	}
 
 	void down() {

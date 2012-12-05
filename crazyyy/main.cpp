@@ -27,7 +27,7 @@ float lastx, lasty;
 float camX, camZ;
 
 //COntrôle vitesse touche clavier
-double KeysInterval = 100;
+double KeysInterval = 80;
 Uint32 lastKey;
 
 int main(int argc, char *argv[]) {
@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
 	 *  	p4: far: pour qu'un objet puisse s'afficher sur l'écran, il faut qu'il se situe entre les zones near et far, sinon il ne sera pas affiché.
 	 */
 	//gluPerspective (20, (double)LARGEUR/HAUTEUR, 1, 100);
-	gluPerspective(70, (double) LARGEUR / HAUTEUR, 1, 100);
+	gluPerspective(60, (double) LARGEUR / HAUTEUR, 1, 100);
 	SDL_Flip(ecran);
 
 	SDL_Event event;
@@ -67,11 +67,7 @@ int main(int argc, char *argv[]) {
 	//int cameraX = 0;
 	int cameraY = 2;
 	//int cameraZ = 0;
-	/* Passer en mode Création de la carte: x=38;
-	 * Passer en mode Jeu: x=132
-	 *
-	 * La touche A permet de changer le mode
-	 */
+
 
 	//GLUquadricObj * quad1 = gluNewQuadric();
 	//gluQuadricDrawStyle(quad1, GLU_FILL);
@@ -81,10 +77,6 @@ int main(int argc, char *argv[]) {
 
 	CharacterBuilder* cb = new CharacterBuilder();
 	Character* character = cb->createCharacter();
-
-	//GLuint floorText = loadTexture("textures/floor.jpg");
-	//GLuint wallText = loadTexture("textures/wall.jpg");
-	//GLuint earthText = loadTexture("textures/earth.jpg");
 
 	bool back = false;
 	bool moved = false;
@@ -100,11 +92,12 @@ int main(int argc, char *argv[]) {
 		}
 
 		//Sauvegarde de quand la dernière touche à été pressée
-		//lastKey = SDL_GetTicks();
-		//cout <<"CT:"<< current_time  << "  LK" <<  lastKey <<  endl;
+
+		cout <<"CT:"<< current_time  << "  LK" <<  lastKey <<  endl;
 		//if(current_time > lastKey + KeysInterval){
-		if (true) {
+		if (current_time > lastKey + KeysInterval) {
 			if (keystate[SDLK_RIGHT]) {
+				lastKey = SDL_GetTicks();
 				//Position* rightPosition = character->rightPosition();
 
 				//if (character->isJumping || map->getCube(rightPosition->getX(), rightPosition->getY(),rightPosition->getZ()) != 0) {
@@ -116,6 +109,7 @@ int main(int argc, char *argv[]) {
 				//x++;
 			}
 			if (keystate[SDLK_LEFT]) {
+				lastKey = SDL_GetTicks();
 				//Position* leftPosition = character->leftPosition();
 
 				//if (character->isJumping || map->getCube(leftPosition->getX(), leftPosition->getY(),leftPosition->getZ()) != 0) {
@@ -127,6 +121,7 @@ int main(int argc, char *argv[]) {
 				//x--;
 			}
 			if (keystate[SDLK_UP]) {
+				lastKey = SDL_GetTicks();
 				//Position* frontPosition = character->frontPosition();
 
 				//if (character->isJumping || map->getCube(frontPosition->getX(), frontPosition->getY(),frontPosition->getZ()) != 0) {
@@ -138,6 +133,7 @@ int main(int argc, char *argv[]) {
 				//cameraZ--;
 			}
 			if (keystate[SDLK_DOWN]) {
+				lastKey = SDL_GetTicks();
 				if (back == true) {
 					//Position* backPosition = character->backPosition();
 
@@ -155,20 +151,22 @@ int main(int argc, char *argv[]) {
 				//y--;
 			}
 			if (keystate[SDLK_SPACE]) {
+				lastKey = SDL_GetTicks();
 				//Position* frontPosition = character->frontPosition();
 
 				//if (map->getCube(frontPosition->getX(), frontPosition->getY(), frontPosition->getZ()) != 0) {
 
 				//On regarde quand a été fait le dernier faut
-				if (character->lastJump_time + 1000 < current_time) {
+				//if (character->lastJump_time + 1000 < current_time) {
 					character->up();
 					moved = true;
-				}
+				//}
 				//}
 
 				back = false;
 			}
 			if (keystate[SDLK_LSHIFT]) {
+				lastKey = SDL_GetTicks();
 				//Position* frontPosition = character->frontPosition();
 
 				//if (map->getCube(frontPosition->getX(), frontPosition->getY(), frontPosition->getZ()) != 0) {
@@ -179,16 +177,18 @@ int main(int argc, char *argv[]) {
 				back = false;
 			}
 			if (keystate[SDLK_q]) {
+				lastKey = SDL_GetTicks();
 				character->rotateLeft();
-				cout << "camX:" << camX << endl;
-				cout << "camZ:" << camZ << endl;
+				//cout << "camX:" << camX << endl;
+				//cout << "camZ:" << camZ << endl;
 				//cout << "c.angle:" << character->rotAngle << endl;
 			}
 			if (keystate[SDLK_s]) {
+				lastKey = SDL_GetTicks();
 				character->rotateRight();
-				cout << "camX:" << camX << endl;
-				cout << "camZ:" << camZ << endl;
-				cout<<"diff:"<<float(cos(character->rotAngle / 180 * 3.141592654f))<<endl;
+				//cout << "camX:" << camX << endl;
+				//cout << "camZ:" << camZ << endl;
+				//cout<<"diff:"<<float(cos(character->rotAngle / 180 * 3.141592654f))<<endl;
 				//cout << "c.angle:" << character->rotAngle << endl;
 			}
 

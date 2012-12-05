@@ -16,7 +16,7 @@ public:
 	Plate(vector<Cube*> cubes) {
 		this->cubes = cubes;
 	}
-	;
+
 
 	//Constructeur d'une Plate
 	Plate(double x, double y, double z, vector<Cube*> cubes) {
@@ -27,7 +27,6 @@ public:
 
 		this->draw();
 	}
-	;
 
 	~Plate();
 
@@ -40,7 +39,10 @@ public:
 		}
 		glPopMatrix();
 	}
-	;
+
+	void addObstacle(double x, double y, double z,Color* color){
+		//Obstacle obs = new Obstacle(4,4,4,4,4,4,1,1,color,GLuint* textures);
+	}
 
 	vector<Cube*> getCubes() {
 		return this->cubes;
