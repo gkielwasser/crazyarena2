@@ -16,11 +16,16 @@ public:
 	double speed;
 	Uint32 jumpStart_time;
 	Uint32 lastJump_time;
-	bool isJumping;
+	bool isJumping; // est en train de sauter
+	bool isOnTheGround; // est sur le sol
 	bool isTurningLeft;
 	bool isTurningRight;
 	bool isDown;
 	float rotAngle;
+	float jumpSpeed;
+	double yGoal;
+	double yStart;
+
 
 	//Temporaire pour mieux visualiser les cubes(couleur du cube)
 	Color* color;
@@ -37,6 +42,8 @@ public:
 		this->lastJump_time = NULL;
 		this->rotAngle = 0;
 		this->speed = 1;
+		this->isOnTheGround = true;
+		this->jumpSpeed = 0.25;
 	}
 
 	~Character();
@@ -129,30 +136,14 @@ public:
 		return position;
 	}
 
-	void front() {
-		this->x += float(cos(this->rotAngle / 180 * 3.141592654f));
-		this->z += float(sin(this->rotAngle / 180 * 3.141592654f));
-	}
-
 	Position* backPosition() {
 		Position* position = new Position(this->x - speed, this->y - speed, this->z);
 		return position;
 	}
 
-	void back() {
-		this->x -= float(cos(this->rotAngle / 180 * 3.141592654f));
-		this->z -= float(sin(this->rotAngle / 180 * 3.141592654f));
-	}
-
 	Position* rightPosition() {
-
 		Position* position = new Position(this->x, this->y - speed, this->z + speed);
 		return position;
-	}
-
-	void right() {
-		this->x -= float(sin(this->rotAngle / 180 * 3.141592654f));
-		this->z += float(cos(this->rotAngle / 180 * 3.141592654f));
 	}
 
 	Position* leftPosition() {
@@ -160,30 +151,88 @@ public:
 		return position;
 	}
 
-	void left() {
-		this->x += float(sin(this->rotAngle / 180 * 3.141592654f));
-		this->z -= float(cos(this->rotAngle / 180 * 3.141592654f));
+	/*
+	 * Obstacle
+	 */
+	Position* frontObstaclePosition() {
+		Position* position = new Position(this->x + speed, this->y, this->z);
+		return position;
 	}
 
-	Position* upPosition() {
-		Position* position = new Position(this->x, this->y + speed, this->z);
+	Position* leftObstaclePosition() {
+		Position* position = new Position(this->x, this->y, this->z - speed);
 		return position;
+	}
+
+	Position* rightObstaclePosition() {
+		Position* position = new Position(this->x, this->y, this->z + speed);
+		return position;
+	}
+
+	/*
+	 * Sous le personnage
+	 */
+	Position* frontDownPosition() {
+		Position* position = new Position(this->x, this->y - speed, this->z);
+		return position;
+	}
+
+	void front() {
+		this->x += round(float(cos(this->rotAngle / 180 * 3.141592654f)));
+		this->z += round(float(sin(this->rotAngle / 180 * 3.141592654f)));
+	}
+
+	void back() {
+		this->x -= round(float(cos(this->rotAngle / 180 * 3.141592654f)));
+		this->z -= round(float(sin(this->rotAngle / 180 * 3.141592654f)));
+	}
+
+	void right() {
+		this->x -= round(float(sin(this->rotAngle / 180 * 3.141592654f)));
+		this->z += round(float(cos(this->rotAngle / 180 * 3.141592654f)));
+	}
+
+	void left() {
+		this->x += round(float(sin(this->rotAngle / 180 * 3.141592654f)));
+		this->z -= round(float(cos(this->rotAngle / 180 * 3.141592654f)));
 	}
 
 	void up() {
-		//Test le niveau du perso
-		if (this->y < 2 && !this->isJumping) {
-			//Début du saut
-			this->jumpStart_time = SDL_GetTicks();
-			this->isJumping = true;
-			this->isDown = false;
-			this->y += speed * 2;
+		//Début du saut
+		//this->jumpStart_time = SDL_GetTicks();
+		this->isJumping = true;
+		this->isOnTheGround = false;
+		this->yGoal = this->y + 1;
+		this->yStart = this->y;
+		cout<<"yGoal:"<<yGoal<<"  yStart:"<<yStart<<endl;
+		//this->isDown = false;
+		//this->y += speed;
+		//this->y += speed;
+	}
+
+	void down() {
+		//this->lastJump_time = SDL_GetTicks();
+		//this->isJumping = false;
+		this->y -= speed;
+	}
+
+	void smoothUp(){
+		//S'il n'est pas arrivé au Y final
+		if(this->y < this->yGoal) this->y += this->jumpSpeed;
+		//Sinon descendre
+		else{
+			this->isJumping = false;
+			smoothDown();
 		}
 	}
 
-	Position* downPosition() {
-		Position* position = new Position(this->x, this->y - speed, this->z);
-		return position;
+	void smoothDown(){
+		//S'il n'est pas encore au sol
+		if(this->y > this->yStart)	this->y -= this->jumpSpeed;
+		//S'il est arrivé au sol
+		else if(this->y == this->yStart){
+			this->isOnTheGround = true;
+		}
 	}
 
 	void rotateRight() {
@@ -192,12 +241,8 @@ public:
 	void rotateLeft() {
 		this->rotAngle = this->rotAngle - 90;
 	}
-
-	void down() {
-		this->lastJump_time = SDL_GetTicks();
-
-		this->y -= speed * 2;
-		this->isJumping = false;
+	void rotateBack() {
+		this->rotAngle = this->rotAngle + 180;
 	}
 
 	double getX() {

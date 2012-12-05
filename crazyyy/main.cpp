@@ -10,10 +10,12 @@
 #include "sdlglutils.h"
 #include <iostream>
 #include "math.h"
+#include "cstdlib"
+#include "ctime"
 
 #define LARGEUR 800
 #define HAUTEUR 600
-#define FRAMES_PER_SECOND 25
+#define FRAMES_PER_SECOND 30
 
 using namespace std;
 
@@ -31,6 +33,9 @@ double KeysInterval = 80;
 Uint32 lastKey;
 
 int main(int argc, char *argv[]) {
+	//Change le random (marche pas)
+	//srand(time(NULL));
+
 	// Initialisation de la SDL
 	SDL_Init(SDL_INIT_VIDEO);
 
@@ -93,47 +98,58 @@ int main(int argc, char *argv[]) {
 
 		//Sauvegarde de quand la dernière touche à été pressée
 
-		cout <<"CT:"<< current_time  << "  LK" <<  lastKey <<  endl;
+		//cout <<"CT:"<< current_time  << "  LK" <<  lastKey <<  endl;
 		//if(current_time > lastKey + KeysInterval){
 		if (current_time > lastKey + KeysInterval) {
 			if (keystate[SDLK_RIGHT]) {
 				lastKey = SDL_GetTicks();
-				//Position* rightPosition = character->rightPosition();
+				Position* rightObstaclePosition= character->rightObstaclePosition();
 
-				//if (character->isJumping || map->getCube(rightPosition->getX(), rightPosition->getY(),rightPosition->getZ()) != 0) {
-				character->right();
-				moved = true;
-				//}
+				if (map->getCube(rightObstaclePosition->getX(),rightObstaclePosition->getY(), rightObstaclePosition->getZ()) == 0) {
+					character->right();
+					moved = true;
+				}
 
 				back = false;
 				//x++;
 			}
 			if (keystate[SDLK_LEFT]) {
 				lastKey = SDL_GetTicks();
-				//Position* leftPosition = character->leftPosition();
+				Position* leftObstaclePosition = character->leftObstaclePosition();
 
-				//if (character->isJumping || map->getCube(leftPosition->getX(), leftPosition->getY(),leftPosition->getZ()) != 0) {
-				character->left();
-				moved = true;
-				//}
+				if (map->getCube(leftObstaclePosition->getX(),leftObstaclePosition->getY(), leftObstaclePosition->getZ()) == 0) {
+					character->left();
+					moved = true;
+				}
 
 				back = false;
 				//x--;
 			}
 			if (keystate[SDLK_UP]) {
 				lastKey = SDL_GetTicks();
-				//Position* frontPosition = character->frontPosition();
+				Position* frontObstaclePosition = character->frontObstaclePosition();
 
-				//if (character->isJumping || map->getCube(frontPosition->getX(), frontPosition->getY(),frontPosition->getZ()) != 0) {
-				character->front();
-				moved = true;
+				//Test du cube sur lequel on marche
+				//if (character->isJumping || map->getCube(frontPosition->getX(),
+						//frontPosition->getY(), frontPosition->getZ()) != 0) {
+					//Test d'un obstacle
+					cout<< (map->getCube(frontObstaclePosition->getX(), frontObstaclePosition->getY(),frontObstaclePosition->getZ()) == 0) <<endl;
+					if (map->getCube(frontObstaclePosition->getX(), frontObstaclePosition->getY(),
+							frontObstaclePosition->getZ()) == 0) {
+						character->front();
+						moved = true;
+					}
+
+				//} else {
+					//character->down();
 				//}
 
 				back = false;
-				//cameraZ--;
 			}
 			if (keystate[SDLK_DOWN]) {
 				lastKey = SDL_GetTicks();
+				character->rotateBack();
+				/*
 				if (back == true) {
 					//Position* backPosition = character->backPosition();
 
@@ -141,28 +157,16 @@ int main(int argc, char *argv[]) {
 					character->back();
 					moved = true;
 					//}
-
-					character->back();
-					back = false;
-					//TOTO
 				} else {
 					back = true;
 				}
-				//y--;
+				*/
 			}
 			if (keystate[SDLK_SPACE]) {
-				lastKey = SDL_GetTicks();
-				//Position* frontPosition = character->frontPosition();
-
-				//if (map->getCube(frontPosition->getX(), frontPosition->getY(), frontPosition->getZ()) != 0) {
-
-				//On regarde quand a été fait le dernier faut
-				//if (character->lastJump_time + 1000 < current_time) {
-					character->up();
-					moved = true;
-				//}
-				//}
-
+				//lastKey = SDL_GetTicks();
+				//Début du saut
+				if(!character->isJumping && character->isOnTheGround)	character->up();
+				moved = true;
 				back = false;
 			}
 			if (keystate[SDLK_LSHIFT]) {
@@ -173,27 +177,19 @@ int main(int argc, char *argv[]) {
 
 				character->down();
 				moved = true;
-
 				back = false;
 			}
 			if (keystate[SDLK_q]) {
 				lastKey = SDL_GetTicks();
 				character->rotateLeft();
-				//cout << "camX:" << camX << endl;
-				//cout << "camZ:" << camZ << endl;
-				//cout << "c.angle:" << character->rotAngle << endl;
 			}
 			if (keystate[SDLK_s]) {
 				lastKey = SDL_GetTicks();
 				character->rotateRight();
-				//cout << "camX:" << camX << endl;
-				//cout << "camZ:" << camZ << endl;
-				//cout<<"diff:"<<float(cos(character->rotAngle / 180 * 3.141592654f))<<endl;
-				//cout << "c.angle:" << character->rotAngle << endl;
 			}
 
 			if (moved == true) {
-				//cout << "x: " << character->getX() << " y:" << character->getY() << " z:"<< character->getZ() << endl;
+				cout << "x: " << character->getX() << " y:" << character->getY() << " z:"<< character->getZ() << endl;
 				moved = false;
 			}
 		}
@@ -229,15 +225,26 @@ int main(int argc, char *argv[]) {
 		// On fait avancer le personnage
 		//character->front();
 
-		//Faire retomber le perso
-		//cout<<(character->getJumpStartTime() + 20 < current_time)<<endl;
-		//jumpTime=SDL_GetTicks();
-
-		if (character->isJumping && (current_time > character->getJumpStartTime() + 500)) {
-			//cout<<current_time<<"  /   "<< character->getJumpStartTime()<<endl;
-			character->down();
+		//le personnage doit continuer de monter
+		cout<<"y character:"<< character->y<< " isJumping:" <<  character->isJumping<< " isOnTheGround:"<< character->isOnTheGround << endl;
+		if(character->isJumping){
+			character->smoothUp();
 		}
-		//cout<<"time:"<<current_time<<endl;
+		else{
+			//faire descendre le personnage s'il ne saute pas et n'est pas sur le sol
+			if(!character->isJumping && !character->isOnTheGround){
+				character->smoothDown();
+			}
+		}
+
+
+		//Test pour savoir si le personnage doit tomber (hors saut)
+		if(!character->isJumping){
+			Position* frontDownPosition = character->frontDownPosition();
+			if (map->getCube(frontDownPosition->getX(), frontDownPosition->getY(), frontDownPosition->getZ()) == 0) {
+				character->down();
+			}
+		}
 
 		// On dessine tous les éléments
 		map->draw();
