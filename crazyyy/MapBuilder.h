@@ -50,6 +50,7 @@ public:
 		plates.push_back(p->createPlate(12, 2, 8));
 		plates.push_back(p->createPlate(16, 2, 8));
 		plates.push_back(p->createPlate(20, 2, 8));
+		
 
 		//Ligne 4
 		plates.push_back(p->createPlate(0, 0, 12));
@@ -68,10 +69,11 @@ public:
 		plates.push_back(p->createPlate(8, 0, 20));
 
 		//Ligne 6 LVL3
-
+		
 		plates.push_back(p->createPlate(0, 2, 20));
 		plates.push_back(p->createPlate(4, 2, 20));
 		plates.push_back(p->createPlate(8, 2, 20));
+		
 
 		//Niveau 0
 		plates.push_back(p->createPlate(0, -4, 12));
