@@ -54,7 +54,9 @@ public:
 
 		glColor3ub(this->color->getRed(), this->color->getGreen(), this->color->getBlue());
 		glTranslated(this->x, this->y, this->z);
+		glTranslatef( 0.5, 0.5, 0.5 );
 		glRotated(rotAngle, 0, -1, 0);
+		glTranslatef( -0.5, -0.5, -0.5 );
 
 		//glBindTexture(GL_TEXTURE_2D, this->text1);
 		glBegin(GL_QUADS);
@@ -87,7 +89,7 @@ public:
 		glTexCoord2d(1, 1);
 		glVertex3d(1, 1, 0);
 		glTexCoord2d(1, 0);
-		glVertex3d(1, 0, 1);
+		glVertex3d(1, 1, 1);
 		glTexCoord2d(0, 0);
 		glVertex3d(1, 0, 1);
 		glEnd();
