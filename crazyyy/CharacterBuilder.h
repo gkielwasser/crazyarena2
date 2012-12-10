@@ -11,8 +11,8 @@ class CharacterBuilder {
 			~CharacterBuilder();
 
 			Character* createCharacter() {
-				Color* green = new Color(73, 115, 88);
-				Character* character = new Character(0, 1, 0, 1, 1, green);
+				Color* red = new Color(255, 0, 0);
+				Character* character = new Character(0, 1, 0, 1, 1, red);
 
  				return character;
 			};
