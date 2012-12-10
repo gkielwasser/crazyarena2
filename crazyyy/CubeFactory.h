@@ -3,6 +3,7 @@
 #include "Cube.h"
 #include "Floor.h"
 #include "Obstacle.h"
+#include "sdlglutils.h"
 
 class CubeFactory {
 public:
@@ -13,7 +14,7 @@ public:
 	Color* red;
 	GLuint floorTextures[5];
 	GLuint ObstacleTextures[5];
-
+//Test
 	CubeFactory() {
 		//Chargement des couleurss
 		this->blue = new Color(255, 255, 255);
@@ -23,57 +24,57 @@ public:
 
 		//Chargement des textures
 		GLuint lightFloor, darkFloor;
-		lightFloor = loadTexture("textures/ice01.jpg");
-		darkFloor = loadTexture("textures/ice01.jpg");
+		lightFloor = loadTexture("textures/ice128.jpg");
+		darkFloor = loadTexture("textures/watermark2.jpg");
 
 		//Sol
 		this->floorTextures[0] = lightFloor;
-		this->floorTextures[1] = darkFloor;
-		this->floorTextures[2] = darkFloor;
-		this->floorTextures[3] = darkFloor;
-		this->floorTextures[4] = darkFloor;
-		this->floorTextures[5] = darkFloor;
+		this->floorTextures[1] = lightFloor;
+		this->floorTextures[2] = lightFloor;
+		this->floorTextures[3] = lightFloor;
+		this->floorTextures[4] = lightFloor;
+		this->floorTextures[5] = lightFloor;
 
 		//Obstacle
-		/*
-		 this->ObstacleTextures[0];
-		 this->ObstacleTextures[1];
-		 this->ObstacleTextures[2];
-		 this->ObstacleTextures[3];
-		 this->ObstacleTextures[4];
-		 this->ObstacleTextures[5];
-		 */
+
+		 this->ObstacleTextures[0]=darkFloor;
+		 this->ObstacleTextures[1]=darkFloor;
+		 this->ObstacleTextures[2]=darkFloor;
+		 this->ObstacleTextures[3]=darkFloor;
+		 this->ObstacleTextures[4]=darkFloor;
+		 this->ObstacleTextures[5]=darkFloor;
+
 	}
 
 	CubeFactory(const CubeFactory &);
 	~CubeFactory();
 
-	Cube* createCube(double type, double x, double y, double z, double h, double l, double xmap,
-			double ymap, double zmap) {
+	Cube* createCube(int type, int x, int y, int z, float h, float l, float xmap,
+			float ymap, float zmap,Plate* plate) {
 		Cube* cube;
 
 		if (type == 0) {
 			cube = this->createFloor(x, y, z, h, l, xmap, ymap, zmap, this->blue,
-					this->floorTextures);
+					this->floorTextures,plate);
 		} else {
 			cube = this->createObstacle(x, y, z, h, l, xmap, ymap, zmap, this->red,
-					this->ObstacleTextures);
+					this->ObstacleTextures,plate);
 		}
 
 		return cube;
 	}
 
 private:
-	Floor* createFloor(double x, double y, double z, double h, double l, double xmap, double ymap,
-			double zmap, Color* color, GLuint textures[5]) {
-		Floor* floor = new Floor(x, y, z, h, l, xmap, ymap, zmap, color, textures);
+	Floor* createFloor(int x, int y, int z, float h, float l, float xmap, float ymap,
+			float zmap, Color* color, GLuint textures[5],Plate* plate) {
+		Floor* floor = new Floor(x, y, z, h, l, xmap, ymap, zmap, color, textures,plate);
 
 		return floor;
 	}
 
-	Obstacle* createObstacle(double x, double y, double z, double h, double l, double xmap,
-			double ymap, double zmap, Color* color, GLuint textures[5]) {
-		Obstacle* obstacle = new Obstacle(x, y, z, h, l, xmap, ymap, zmap, color, textures);
+	Obstacle* createObstacle(int x, int y, int z, float h, float l, float xmap,
+			float ymap, float zmap, Color* color, GLuint textures[5],Plate* plate) {
+		Obstacle* obstacle = new Obstacle(x, y, z, h, l, xmap, ymap, zmap, color, textures,plate);
 
 		return obstacle;
 	}
