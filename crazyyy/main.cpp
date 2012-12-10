@@ -2,6 +2,7 @@
 #include <SDL/SDL_image.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
+#include <glut.h>
 #include "MapBuilder.h"
 #include "Map.h"
 #include "CharacterBuilder.h"
@@ -12,10 +13,12 @@
 #include "math.h"
 #include "cstdlib"
 #include "ctime"
+#include "Timer.h"
 
 #define LARGEUR 800
 #define HAUTEUR 600
 #define FRAMES_PER_SECOND 30
+#define EPSILON 1e-8
 
 using namespace std;
 
@@ -29,9 +32,10 @@ float lastx, lasty;
 float camX, camZ;
 
 //COntrôle vitesse touche clavier
-double KeysInterval = 80;
-int doubleHitTime = 150;
+float KeysInterval = 80;
+int hitTime = 160;
 Uint32 lastKey;
+Uint32 hitInterval;
 
 /*
  * Dernière touche appuyée
@@ -42,6 +46,16 @@ Uint32 lastKey;
  * 4: espace
  */
 int lastHit = -1;
+
+int doublesAreEqual(double a, double b) {
+	if (a == b)
+		return 1;
+	double absError = fabs(a - b);
+	a = fabs(a);
+	b = fabs(b);
+
+	return (absError / (a > b ? a : b)) <= EPSILON;
+}
 
 int main(int argc, char *argv[]) {
 	//Change le random (marche pas)
@@ -69,12 +83,14 @@ int main(int argc, char *argv[]) {
 	 *  	p3: near:
 	 *  	p4: far: pour qu'un objet puisse s'afficher sur l'écran, il faut qu'il se situe entre les zones near et far, sinon il ne sera pas affiché.
 	 */
-	//gluPerspective (20, (double)LARGEUR/HAUTEUR, 1, 100);
-	gluPerspective(50, (double) LARGEUR / HAUTEUR, 1, 100);
+	//gluPerspective (20, (float)LARGEUR/HAUTEUR, 1, 100);
+	gluPerspective(70, (float) LARGEUR / HAUTEUR, 1, 10);
 	SDL_Flip(ecran);
 
 	SDL_Event event;
 	SDL_EnableKeyRepeat(10, 10); // Activation de la répétition de touches
+
+	glutInit(&argc, argv); // Initialisation de glut
 
 	Uint32 current_time; // Heure actuelle (frames second)
 	Uint32 last_time = SDL_GetTicks();
@@ -94,6 +110,8 @@ int main(int argc, char *argv[]) {
 	CharacterBuilder* cb = new CharacterBuilder();
 	Character* character = cb->createCharacter();
 
+	Timer* timer = new Timer();
+
 	bool back = false;
 	bool moved = false;
 
@@ -111,11 +129,15 @@ int main(int argc, char *argv[]) {
 
 		//cout <<"CT:"<< current_time  << "  LK" <<  lastKey <<  endl;
 		//if(current_time > lastKey + KeysInterval){
-		if (current_time > lastKey + KeysInterval) {
+		if ((current_time > lastKey + KeysInterval)) {
 			if (keystate[SDLK_RIGHT]) {
 				//Tourner à droite
-				if (lastHit == 1 && (current_time - lastKey < doubleHitTime)) {
-					character->rotateRight();
+				//Ecart entre les 2 frappes de touches
+				hitInterval = current_time - lastKey;
+				cout << "INTERVAL:" << hitInterval << endl;
+				if (lastHit == 1 && (hitInterval < 150) && (hitInterval > 160)) {
+					if (!character->isTurningRight)
+						character->rotateRight();
 					lastHit = -1;
 				}
 				//Couloir de droite
@@ -123,8 +145,7 @@ int main(int argc, char *argv[]) {
 					lastHit = 1;
 					Position* rightObstaclePosition = character->rightObstaclePosition();
 
-					if (map->getCube(rightObstaclePosition->getX(), rightObstaclePosition->getY(),
-							rightObstaclePosition->getZ()) == 0) {
+					if (map->getCube(rightObstaclePosition->getX(), rightObstaclePosition->getY(), rightObstaclePosition->getZ()) == 0) {
 						character->right();
 						moved = true;
 					}
@@ -135,9 +156,12 @@ int main(int argc, char *argv[]) {
 			}
 			if (keystate[SDLK_LEFT]) {
 				//Tourner à gauche
-				if(lastHit == 3) cout<<"interval:"<<(current_time - lastKey)<<endl;
-				if (lastHit == 3 && (current_time - lastKey < doubleHitTime)) {
-					character->rotateLeft();
+				//Ecart entre les 2 frappes de touches
+				hitInterval = current_time - lastKey;
+				cout << "INTERVAL:" << hitInterval << endl;
+				if (lastHit == 3 && (hitInterval < 150) && (hitInterval > 160)) {
+					if (!character->isTurningLeft)
+						character->rotateLeft();
 					lastHit = -1;
 				}
 				//Couloir de gauche
@@ -145,8 +169,7 @@ int main(int argc, char *argv[]) {
 					lastHit = 3;
 					Position* leftObstaclePosition = character->leftObstaclePosition();
 
-					if (map->getCube(leftObstaclePosition->getX(), leftObstaclePosition->getY(),
-							leftObstaclePosition->getZ()) == 0) {
+					if (map->getCube(leftObstaclePosition->getX(), leftObstaclePosition->getY(), leftObstaclePosition->getZ()) == 0) {
 						character->left();
 						moved = true;
 					}
@@ -164,11 +187,11 @@ int main(int argc, char *argv[]) {
 				//if (character->isJumping || map->getCube(frontPosition->getX(),
 				//frontPosition->getY(), frontPosition->getZ()) != 0) {
 				//Test d'un obstacle
-				cout << (map->getCube(frontObstaclePosition->getX(), frontObstaclePosition->getY(),
-						frontObstaclePosition->getZ()) == 0) << endl;
-				if (map->getCube(frontObstaclePosition->getX(), frontObstaclePosition->getY(),
-						frontObstaclePosition->getZ()) == 0) {
+				//cout << (map->getCube(frontObstaclePosition->getX(), frontObstaclePosition->getY(),
+				//frontObstaclePosition->getZ()) == 0) << endl;
+				if (map->getCube(frontObstaclePosition->getX(), frontObstaclePosition->getY(), frontObstaclePosition->getZ()) == 0) {
 					character->front();
+
 					moved = true;
 				}
 
@@ -181,7 +204,8 @@ int main(int argc, char *argv[]) {
 			if (keystate[SDLK_DOWN]) {
 				lastKey = SDL_GetTicks();
 				lastHit = 2;
-				character->rotateBack();
+				if (!character->isTurningBack)
+					character->rotateBack();
 				/*
 				 if (back == true) {
 				 //Position* backPosition = character->backPosition();
@@ -217,11 +241,13 @@ int main(int argc, char *argv[]) {
 			}
 			if (keystate[SDLK_q]) {
 				lastKey = SDL_GetTicks();
-				character->rotateLeft();
+				if (!character->isTurningLeft)
+					character->rotateLeft();
 			}
 			if (keystate[SDLK_s]) {
 				lastKey = SDL_GetTicks();
-				character->rotateRight();
+				if (!character->isTurningLeft)
+					character->rotateRight();
 			}
 
 			if (moved == true) {
@@ -247,24 +273,52 @@ int main(int argc, char *argv[]) {
 		// On efface la fenêtre (pour la redessiner)
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		/*
+		 * Rotation du personnage
+		 */
+		if (character->isTurningRight) {
+			character->smoothRight();
+		}
+		if (character->isTurningLeft) {
+			character->smoothLeft();
+		}
+		if (character->isTurningBack) {
+			character->smoothBack();
+		}
+
 		camX = character->getX() - float(cos(character->rotAngle / 180 * 3.141592654f));
 		camZ = character->getZ() - float(sin(character->rotAngle / 180 * 3.141592654f));
+		//cout<<"camx:"<<camX<<endl;
 
-		gluLookAt(camX, character->getY() + cameraY, camZ, character->getX(),
-				character->getY() + cameraY, character->getZ(), upX, upY, upZ);
+		gluLookAt(camX, character->getY() + cameraY, camZ, character->getX(), character->getY() + cameraY, character->getZ(), upX, upY, upZ);
 
-		// On fait tourner le monde (caméra).
-		//glTranslated(character->getX(),0,0);
-		//glTranslatef(0.0f, 0.0f, -cRadius);
-		//glRotated(x, 0, 1, 0);
+		/*
+		 * Affichage de la position du personnage
+		 */
+		cout << "Sortie 1: Currentx: " << character->getX() << " y:" << character->getY() << " z:" << character->getZ() << endl;
 
-		// On fait avancer le personnage
-		//character->front();
+		/*
+		 * Affichage de la prochaine position du personnage
+		 */
+		Position* frontPosition = character->frontPosition();
+		//cout << "Sortie 2: NextX: " << frontPosition->getX() << " NextY:" << frontPosition->getY() << " nextZ:" << frontPosition->getZ() << endl;
 
-		//le personnage doit continuer de monter
-		//cout << "y character:" << character->y << " isJumping:" << character->isJumping
-				//<< " isOnTheGround:" << character->isOnTheGround << endl;
+		/*
+		 * Affichage de s'il va y avoir une collision frontale
+		 */
+		Position* nexObstacle = character->frontObstaclePosition();
+		Cube* cube = map->getCubeCol(nexObstacle->getX(), nexObstacle->getY(), nexObstacle->getZ());
+
+		if ((cube != 0) && cube->xcol == floor(frontPosition->getX())) {
+			//cout << "front=" << frontPosition->getX() << "xmap=" << cube->xmap << endl;
+			//cout << "OBSTACLE-------------------------------------->" << "obsX:" << cube->xmap << "obsY:" << cube->ymap << "obsZ:" << cube->ymap << endl;
+			character->speed = 0;
+		} else {
+			character->front();
+		}
+
 		Position* frontDownPosition = character->frontDownPosition();
+
 		//cout << "cube en dessous?:" << (map->getCube(frontDownPosition->getX(),frontDownPosition->getY(), frontDownPosition->getZ()) != 0) << endl;
 		if (character->isJumping) {
 			character->smoothUp();
@@ -272,12 +326,12 @@ int main(int argc, char *argv[]) {
 			//faire descendre le personnage s'il ne saute pas et n'est pas sur le sol
 			//Test pour savoir s'il y a un cube sous le personnage(dans ce cas, il faut arreter le saut
 
-			if (map->getCube(frontDownPosition->getX(), frontDownPosition->getY(),
-					frontDownPosition->getZ()) != 0) {
+			if (map->getCube(frontDownPosition->getX(), frontDownPosition->getY(), frontDownPosition->getZ()) != 0) {
 				character->isJumping = false;
 				character->isOnTheGround = true;
 			}
 			if (!character->isJumping && !character->isOnTheGround) {
+				cout << "DOWN" << endl;
 				character->smoothDown();
 			}
 		}
@@ -285,17 +339,17 @@ int main(int argc, char *argv[]) {
 		//Test pour savoir si le personnage doit tomber (hors saut)
 		if (!character->isJumping) {
 			Position* frontDownPosition = character->frontDownPosition();
-			if (map->getCube(frontDownPosition->getX(), frontDownPosition->getY(),
-					frontDownPosition->getZ()) == 0) {
+			if (map->getCube(frontDownPosition->getX(), frontDownPosition->getY(), frontDownPosition->getZ()) == 0) {
 				//character->down();
 			}
 		}
 
 		// On dessine tous les éléments
-		map->draw();
+		map->draw(character->getX(),character->getY(),character->getZ());
 		character->draw();
+		timer->draw();
 
-		// Affichage (en double buffering)
+		// Affichage (en float buffering)
 		glFlush();
 		SDL_GL_SwapBuffers();
 	}
