@@ -8,9 +8,9 @@ using namespace std;
 class Plate {
 protected:
 	vector<Cube*> cubes;
-	double x;
-	double y;
-	double z;
+	int x;
+	int y;
+	int z;
 
 public:
 	Plate(vector<Cube*> cubes) {
@@ -19,13 +19,10 @@ public:
 
 
 	//Constructeur d'une Plate
-	Plate(double x, double y, double z, vector<Cube*> cubes) {
+	Plate(int x, int y, int z) {
 		this->x = x;
 		this->y = y;
 		this->z = z;
-		this->cubes = cubes;
-
-		this->draw();
 	}
 
 	~Plate();
@@ -40,23 +37,23 @@ public:
 		glPopMatrix();
 	}
 
-	void addObstacle(double x, double y, double z,Color* color){
-		//Obstacle obs = new Obstacle(4,4,4,4,4,4,1,1,color,GLuint* textures);
-	}
-
 	vector<Cube*> getCubes() {
 		return this->cubes;
 	}
-	double getX() {
+	int getX() {
 		return x;
 	}
 
-	double getY() {
+	int getY() {
 		return y;
 	}
 
-	double getZ() {
+	int getZ() {
 		return z;
+	}
+
+	void setCubes(vector<Cube*> cubes){
+		this->cubes = cubes;
 	}
 };
 
