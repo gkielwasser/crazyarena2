@@ -4,8 +4,8 @@
 class ParameterBuilder {
 		protected:
 			int difficulty;
-			double height;
-			double width;
+			int height;
+			int width;
 
 		public:
 			ParameterBuilder();
