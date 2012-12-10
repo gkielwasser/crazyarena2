@@ -1,18 +1,18 @@
 #ifndef Floor_H_INCLUDED
 #define Floor_H_INCLUDED
 #include "Cube.h"
-#include <iostream>
+#include "Plate.h"
 
 class Floor: public Cube {
 public:
 	Floor();
 	Floor(const Floor &);
 
-	Floor(int x, int y, int z, double xmap, double ymap, double zmap, int h, int l, Color* c,
-			GLuint t[5]) :
-		Cube(x, y, z, xmap, ymap, zmap, h, l, c, t) {
+	Floor(int x, int y, int z, int xmap, int ymap, int zmap, int h, int l, Color* c,
+			GLuint t[5], Plate* plate) :
+		Cube(x, y, z, xmap, ymap, zmap, h, l, c, t,plate) {
 	}
-	;
+
 
 	~Floor();
 
@@ -21,7 +21,7 @@ public:
 		glPushMatrix();
 		glTranslated(this->x, this->y, this->z);
 
-		glColor3ub(51, 51, 51);
+		//glColor3ub(51, 51, 51);
 
 		glBindTexture(GL_TEXTURE_2D, this->textures[0]);
 		glBegin(GL_QUADS);
@@ -35,7 +35,7 @@ public:
 		glVertex3d(0, 1, 0);
 		glEnd();
 
-		glColor3ub(51, 51, 51);
+		//glColor3ub(51, 51, 51);
 		glBindTexture(GL_TEXTURE_2D, this->textures[1]);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
@@ -48,7 +48,7 @@ public:
 		glVertex3d(0, 0, 1);
 		glEnd();
 
-		glColor3ub(51, 51, 51);
+		//glColor3ub(51, 51, 51);
 		glBindTexture(GL_TEXTURE_2D, this->textures[2]);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
@@ -61,7 +61,7 @@ public:
 		glVertex3d(1, 0, 1);
 		glEnd();
 
-		glColor3ub(this->color->getRed(), this->color->getGreen(), this->color->getBlue());
+		//glColor3ub(this->color->getRed(), this->color->getGreen(), this->color->getBlue());
 		glBindTexture(GL_TEXTURE_2D, this->textures[3]);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
@@ -74,7 +74,7 @@ public:
 		glVertex3d(1, 1, 1);
 		glEnd();
 
-		glColor3ub(51, 51, 51);
+		//glColor3ub(51, 51, 51);
 		glBindTexture(GL_TEXTURE_2D, this->textures[4]);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
@@ -87,7 +87,7 @@ public:
 		glVertex3d(0, 0, 1);
 		glEnd();
 
-		glColor3ub(51, 51, 51);
+		//glColor3ub(51, 51, 51);
 		glBindTexture(GL_TEXTURE_2D, this->textures[5]);
 		glBegin(GL_QUADS);
 		glTexCoord2d(0, 1);
