@@ -10,11 +10,11 @@ class Bonus {
 	           int x,y,a,speed,type;
 	           void Draw();
 	           void Position();
-	           double getX();
+	           float getX();
 
-	           double getY();
+	           float getY();
 
-	           double getA();
+	           float getA();
 	           int getType();
 
 
