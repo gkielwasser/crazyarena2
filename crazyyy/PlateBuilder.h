@@ -16,7 +16,7 @@ public:
 
 	PlateBuilder() {
 		//Random pour savoir s'il va y avoir un obstacle sur la plaque
-		if(randomInt(0,1)){
+		if(randomInt(0,0)){
 			this->contentObstacle = true;
 
 			//Random du nombre d'obstacles
@@ -32,31 +32,33 @@ public:
 	PlateBuilder(const PlateBuilder &);
 	~PlateBuilder();
 
-	Plate* createPlate(double x, double y, double z) {
+	Plate* createPlate(float x, float y, float z) {
 		CubeFactory* cf = new CubeFactory();
 
 		//Un vecteur par ligne
 		vector<Cube*> cubes;
 
-		cubes.push_back(cf->createCube(0, 0, 0, 0, 1, 1, x, y, z));
-		cubes.push_back(cf->createCube(0, 1, 0, 0, 1, 1, x + 1, y, z));
-		cubes.push_back(cf->createCube(0, 2, 0, 0, 1, 1, x + 2, y, z));
-		cubes.push_back(cf->createCube(0, 3, 0, 0, 1, 1, x + 3, y, z));
+		Plate* plate = new Plate(x, y, z);
 
-		cubes.push_back(cf->createCube(0, 0, 0, 1, 1, 1, x, y, z + 1));
-		cubes.push_back(cf->createCube(0, 1, 0, 1, 1, 1, x + 1, y, z + 1));
-		cubes.push_back(cf->createCube(0, 2, 0, 1, 1, 1, x + 2, y, z + 1));
-		cubes.push_back(cf->createCube(0, 3, 0, 1, 1, 1, x + 3, y, z + 1));
+		cubes.push_back(cf->createCube(0, 0, 0, 0, 1, 1, x, y, z,plate));
+		cubes.push_back(cf->createCube(0, 1, 0, 0, 1, 1, x + 1, y, z,plate));
+		cubes.push_back(cf->createCube(0, 2, 0, 0, 1, 1, x + 2, y, z,plate));
+		cubes.push_back(cf->createCube(0, 3, 0, 0, 1, 1, x + 3, y, z,plate));
 
-		cubes.push_back(cf->createCube(0, 0, 0, 2, 1, 1, x, y, z + 2));
-		cubes.push_back(cf->createCube(0, 1, 0, 2, 1, 1, x + 1, y, z + 2));
-		cubes.push_back(cf->createCube(0, 2, 0, 2, 1, 1, x + 2, y, z + 2));
-		cubes.push_back(cf->createCube(0, 3, 0, 2, 1, 1, x + 3, y, z + 2));
+		cubes.push_back(cf->createCube(0, 0, 0, 1, 1, 1, x, y, z + 1,plate));
+		cubes.push_back(cf->createCube(0, 1, 0, 1, 1, 1, x + 1, y, z + 1,plate));
+		cubes.push_back(cf->createCube(0, 2, 0, 1, 1, 1, x + 2, y, z + 1,plate));
+		cubes.push_back(cf->createCube(0, 3, 0, 1, 1, 1, x + 3, y, z + 1,plate));
 
-		cubes.push_back(cf->createCube(0, 0, 0, 3, 1, 1, x, y, z + 3));
-		cubes.push_back(cf->createCube(0, 1, 0, 3, 1, 1, x + 1, y, z + 3));
-		cubes.push_back(cf->createCube(0, 2, 0, 3, 1, 1, x + 2, y, z + 3));
-		cubes.push_back(cf->createCube(0, 3, 0, 3, 1, 1, x + 3, y, z + 3));
+		cubes.push_back(cf->createCube(0, 0, 0, 2, 1, 1, x, y, z + 2,plate));
+		cubes.push_back(cf->createCube(0, 1, 0, 2, 1, 1, x + 1, y, z + 2,plate));
+		cubes.push_back(cf->createCube(0, 2, 0, 2, 1, 1, x + 2, y, z + 2,plate));
+		cubes.push_back(cf->createCube(0, 3, 0, 2, 1, 1, x + 3, y, z + 2,plate));
+
+		cubes.push_back(cf->createCube(0, 0, 0, 3, 1, 1, x, y, z + 3,plate));
+		cubes.push_back(cf->createCube(0, 1, 0, 3, 1, 1, x + 1, y, z + 3,plate));
+		cubes.push_back(cf->createCube(0, 2, 0, 3, 1, 1, x + 2, y, z + 3,plate));
+		cubes.push_back(cf->createCube(0, 3, 0, 3, 1, 1, x + 3, y, z + 3,plate));
 
 		//Ajout des obstacles (niveau 1 et 2)
 		if(this->contentObstacle){
@@ -64,18 +66,18 @@ public:
 				//Random obstacle de leurs positions
 				int randX = randomInt(0,3);
 				int randZ = randomInt(0,3);
-				cubes.push_back(cf->createCube(1, randX, 1, randZ, 1, 1, x + randX, y + 1, z + randZ));
+				cubes.push_back(cf->createCube(1, randX, 1, randZ, 1, 1, x + randX, y + 1, z + randZ,plate));
 			}
 		}
 
 
 
-		Plate* plate = new Plate(x, y, z, cubes);
+		plate->setCubes(cubes);
 
 		return plate;
 	}
 
-	double randomInt(int a, int b){
+	int randomInt(int a, int b){
 	    return (a + (rand() % (b-a+1)));
 	}
 
